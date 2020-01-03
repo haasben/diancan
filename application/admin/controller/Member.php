@@ -1128,6 +1128,9 @@ class Member extends Base {
         // 多语言
         $condition['a.lang'] = array('eq', $this->admin_lang);
 
+        if($this->store_id != 0){
+            $condition['a.store_id'] = $this->store_id;
+        }
         /**
          * 数据查询
          */

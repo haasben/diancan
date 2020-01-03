@@ -107,7 +107,8 @@ class Seo extends Base
                 'is_del'  => 0, // 回收站功能
             );
             $arctypeLogic = new ArctypeLogic();
-            $select_html = $arctypeLogic->arctype_list(0, 0, true, config('global.arctype_max_level'), $map);
+            $select_html = $arctypeLogic->arctype_list(0, 0, true,0, config('global.arctype_max_level'), $map,$this->store_id);
+ 
             $this->assign('select_html',$select_html);
             // 允许发布文档列表的栏目
             $arc_select_html = allow_release_arctype();

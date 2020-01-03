@@ -77,94 +77,71 @@ class Index extends Base
         }
         $this->assign('is_syn_theme_users',$is_syn_theme_users);
         /*--end*/
+        $this->assign('store_id',$this->store_id);
 
         return $this->fetch();
     }
    
     public function welcome()
     {
-        $globalConfig = tpCache('global');
-        /*百度分享*/
-        $share = array(
-            'bdText'    => $globalConfig['web_title'],
-            'bdPic'     => is_http_url($globalConfig['web_logo']) ? $globalConfig['web_logo'] : request()->domain().$globalConfig['web_logo'],
-            'bdUrl'     => $globalConfig['web_basehost'],
-        );
-        $this->assign('share',$share);
-        /*--end*/
 
-        // 纠正上传附件的大小，始终以空间大小为准
-        $file_size = $globalConfig['file_size'];
-        $maxFileupload = @ini_get('file_uploads') ? ini_get('upload_max_filesize') : 0;
-        $maxFileupload = intval($maxFileupload);
-        if (empty($file_size) || $file_size > $maxFileupload) {
-            /*多语言*/
-            if (is_language()) {
-                $langRow = Db::name('language')->cache(true, EYOUCMS_CACHE_TIME, 'language')
-                    ->order('id asc')
-                    ->select();
-                foreach ($langRow as $key => $val) {
-                    tpCache('basic', ['file_size'=>$maxFileupload], $val['mark']);
-                }
-            } else { // 单语言
-                tpCache('basic', ['file_size'=>$maxFileupload]);
-            }
-            /*--end*/
-        }
+        $weeks_order = $this->weeks_order();
+        $this->assign('weeks_order',$weeks_order);
 
-        /*未备份数据库提示*/
-        $system_explanation_welcome = $globalConfig['system_explanation_welcome'];
-        $sqlfiles = glob(DATA_PATH.'sqldata/*');
-        foreach ($sqlfiles as $file) {
-            if(stristr($file, getCmsVersion())){
-                $system_explanation_welcome = 1;
-            }
-        }
-        $this->assign('system_explanation_welcome', $system_explanation_welcome);
-        /*--end*/
-
-        /*检查密码复杂度*/
-        $admin_login_pwdlevel = -1;
-        $system_explanation_welcome_2 = $globalConfig['system_explanation_welcome_2'];
-        if (empty($system_explanation_welcome_2)) {
-            $admin_login_pwdlevel = session('admin_login_pwdlevel');
-            if (!session('?admin_login_pwdlevel') || 3 < intval($admin_login_pwdlevel)) {
-                $system_explanation_welcome_2 = 1;
-            }
-        }
-        $this->assign('admin_login_pwdlevel', $admin_login_pwdlevel);
-        $this->assign('system_explanation_welcome_2', $system_explanation_welcome_2);
-        /*end*/
-
-        // 同步导航与内容统计的状态
-        $this->syn_open_quickmenu();
-
-        // 快捷导航
-        $quickMenu = Db::name('quickentry')->where([
-                'type'      => 1,
-                'checked'   => 1,
-                'status'    => 1,
-            ])->order('sort_order asc, id asc')->select();
-        foreach ($quickMenu as $key => $val) {
-            $quickMenu[$key]['vars'] = !empty($val['vars']) ? $val['vars']."&lang=".$this->admin_lang : "lang=".$this->admin_lang;
-        }
-        $this->assign('quickMenu',$quickMenu);
-
-        // 内容统计
-        $contentTotal = $this->contentTotalList();
-        $this->assign('contentTotal',$contentTotal);
-
-        // 服务器信息
-        $this->assign('sys_info',$this->get_sys_info());
-        // 升级弹窗
-        $this->assign('web_show_popup_upgrade', $globalConfig['web_show_popup_upgrade']);
-
-        $ajaxLogic = new \app\admin\logic\AjaxLogic;
-        $ajaxLogic->update_template('users'); // 升级前台会员中心的模板文件
-        $ajaxLogic->sys_level_data(); // 第一次同步会员等级数据和会员产品分类
-
+        $new_order = $this->new_order();
+        $this->assign('new_order',$new_order);
+        // dump($weeks_order);die;
         return $this->fetch();
     }
+
+//首页最新的十条订单
+    public function new_order(){
+
+        $data = Db::name('shop_order')
+            ->alias('s')
+            ->field('s.*,t.name')
+            ->join('table t','t.id = s.table_id')
+            ->where('s.store_id',$this->store_id)
+            ->order('s.add_time desc')
+            ->limit(10)
+            ->select();
+
+        return $data;
+
+
+    }
+
+
+
+    public function weeks_order(){
+        $this_time_d = strtotime(date('Y-m-d 00:00:00'));
+
+        //今日0点时间戳 开始时间
+        $scan = Db::name('shop_order');
+        $arr = array();
+        for ($i=0; $i < 10; $i++) { 
+            $where = [
+                'pay_time'=>['between',[$this_time_d,$this_time_d+60*60*24]],
+                'order_status'=>1,
+            ];
+   
+            $sum = $scan
+                ->where($where)
+                ->sum('order_total_amount');
+            
+            $arr['day'][$i] = [
+                'sum'=>$sum,
+                'time'=>date('Y-m-d',$this_time_d)
+
+            ];
+            $this_time_d -= 60*60*24;
+        }
+        $arr['day'] = array_reverse($arr['day']);
+        // $arr['count'] = $scan->count('order_id');
+
+        return array_reverse($arr);
+    }
+
 
     /**
      * 内容统计管理

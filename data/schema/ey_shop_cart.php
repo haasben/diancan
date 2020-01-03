@@ -18,6 +18,15 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
+  'table_id' => 
+  array (
+    'name' => 'table_id',
+    'type' => 'int(11) unsigned',
+    'notnull' => false,
+    'default' => '0',
+    'primary' => false,
+    'autoinc' => false,
+  ),
   'product_id' => 
   array (
     'name' => 'product_id',

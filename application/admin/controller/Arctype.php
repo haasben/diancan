@@ -55,9 +55,8 @@ class Arctype extends Base
         $arctype_list = array();
         // 目录列表
         $where['is_del'] = '0'; // 回收站功能
-        $arctype_list = $this->arctypeLogic->arctype_list(0, 0, false, 0, $where, false);
+        $arctype_list = $this->arctypeLogic->arctype_list(0, 0, false, 0, $where, false,$this->store_id);
         $this->assign('arctype_list', $arctype_list);
-
         /*多语言模式下，栏目ID显示主体语言的ID和属性title名称*/
         $main_arctype_list = [];
         if ($this->admin_lang != $this->main_lang) {
@@ -170,6 +169,7 @@ class Arctype extends Base
                     'sort_order'    => 100,
                     'add_time'  => getTime(),
                     'update_time'  => getTime(),
+                    'store_id'=>$this->store_id,
                 );
                 $data = array_merge($post, $newData, $addonField);
                 $insertId = model('Arctype')->addData($data);

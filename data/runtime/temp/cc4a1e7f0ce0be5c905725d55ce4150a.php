@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:43:"./application/admin/template/shop\index.htm";i:1577781538;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\shop\shop_bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:43:"./application/admin/template/shop\index.htm";i:1577955082;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\shop\shop_bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -128,7 +128,7 @@
                         <input type="text" size="50"  name="order_code" class="qsbox" style="width: 200px;" value="<?php echo \think\Request::instance()->param('order_code'); ?>" placeholder="搜索订单号...">
                         <input type="submit" class="btn" value="搜索">
                     </div>
-                        <?php if(is_check_access('Shop@index') == '1'): ?>
+        <!--                 <?php if(is_check_access('Shop@index') == '1'): ?>
     <div class="sDiv2 addartbtn fl" style="margin-right: 6px;">
         <input type="button" class="btn <?php if(!in_array(\think\Request::instance()->action(), ['index'])): ?>current<?php else: ?>selected<?php endif; ?>" value="订单列表" onclick="window.location.href='<?php echo url("Shop/index"); ?>';">
     </div>
@@ -136,7 +136,7 @@
     <div class="sDiv2 addartbtn fl" style="margin-right: 6px;">
         <input type="button" class="btn <?php if(!in_array(\think\Request::instance()->action(), ['conf'])): ?>current<?php else: ?>selected<?php endif; ?>" value="功能配置" onclick="window.location.href='<?php echo url("Shop/conf"); ?>';">
     </div>
-    <?php endif; ?>
+    <?php endif; ?> -->
                 </div>
             </form>
         </div>

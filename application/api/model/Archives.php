@@ -11,7 +11,7 @@ class Archives extends Model
 	protected $name = 'archives';
 
 //获取某个分类下的所有菜品
-	public function get_cate_archives($cate_id){
+	public function get_cate_archives($cate_id,$table_id){
 		$data = self::alias('a')
 			->field('a.aid,a.typeid,a.title,a.litpic,a.users_price,oc.content,oc.discount,oc.rebate')
 			->join('o_product_content oc','oc.aid = a.aid')
@@ -21,10 +21,13 @@ class Archives extends Model
 			->where('a.arcrank',0)
 			->order('a.sort_order')
 			->select();
+		$cartModel = Model('Cart');
 		foreach ($data as $k => $v) {
 			$data[$k]['content'] = strip_tags(htmlspecialchars_decode($v['content']));
 			$data[$k]['is_spec'] = $this->get_spec_value($v['aid']);
 			$data[$k]['sales_num'] = $this->mouth_sales_num($v['aid'],'month');
+			//加入购物车的数量
+			$data[$k]['cart_num'] = $cartModel->one_product_sum($table_id,$v['aid']);
 		}
 
 		return $data;
@@ -72,17 +75,28 @@ class Archives extends Model
 			$spec_arr[$v['spec_mark_id']]['child'][] =$v; 
 		}
 		sort($spec_arr);
-		$spec_arr['price'] = Db::name('product_spec_value')
-			->field('spec_value_id,spec_price,spec_stock,spec_sales_num')
-			->where('aid',$aid)
-			->select();
-		foreach ($spec_arr['price'] as $k => $v) {
-			$spec_arr['price'][$v['spec_value_id']] = $v;
-			unset($spec_arr['price'][$k]);
-		}
-		return $spec_arr;
+		$new_arr = array();
+		$new_arr['spec'] = $spec_arr;
 
+		$price = Db::name('product_spec_value')
+			->alias('p')
+			->join('o_shop_cart sc','sc.product_id = p.aid && sc.spec_value_id = p.spec_value_id','left')
+			->field('p.spec_value_id,p.spec_price,p.spec_stock,p.spec_sales_num,sc.product_num as cart_num')
+			->where('p.aid',$aid)
+			->select();
+
+		foreach ($price as $k => $v) {
+			if($v['cart_num'] == null){
+				$price[$k]['cart_num'] = 0;
+			}
+			// $price[$v['spec_value_id']] = $v;
+			// unset($price[$k]);
+		}
+		$new_arr['price'] = $price;
+
+		return $new_arr;
 	}
+
 
 //获取产品的详情
 	public function shop_info($aid){
@@ -100,6 +114,19 @@ class Archives extends Model
 			$data['spec'] = $this->get_spec_value_one_archives($aid);
 		}
 		return $data;
+
+	}
+//产品图片集
+	public function archives_img_arr($aid){
+
+		$data = Db::name('product_img')
+			->field('intro as title,image_url')
+			->where('aid',$aid)
+			->order('sort_order')
+			->select();
+		return $data;
+
+
 
 	}
 

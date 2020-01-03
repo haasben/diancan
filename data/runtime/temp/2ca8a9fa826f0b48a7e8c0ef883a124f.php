@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1577760080;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1577954481;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -205,7 +205,7 @@
                                     <?php endif; if($main_lang == $admin_lang): if(is_check_access(CONTROLLER_NAME.'@del') == '1'): ?>
                                     <a class="btn red"  href="javascript:void(0);" data-url="<?php echo url('table/del'); ?>" data-id="<?php echo $vo['id']; ?>" onClick="delfun(this);"><i class="fa fa-trash-o"></i>删除</a>
                                     <?php endif; endif; ?>
-                                    <a class="btn blue" href="javascript:void(0);" onclick="copyToClipBoard(<?php echo $vo['id']; ?>, <?php echo $vo['name']; ?>)">二维码</a>
+                                    <a class="btn blue" href="javascript:void(0);" onclick="copyToClipBoard(<?php echo $vo['id']; ?>, '<?php echo $vo['name']; ?>')">二维码</a>
                                 </div>
                             </td>
                         </tr>

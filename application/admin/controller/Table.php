@@ -32,6 +32,9 @@ class Table extends Base {
         }
         // 多语言
         $condition['a.lang'] = array('eq', $this->admin_lang);
+        if($this->store_id !=0){
+            $condition['a.store_id'] = $this->store_id;
+        }
 
         $adPositionM =  M('table');
         $count = $adPositionM->alias('a')->where($condition)->count();// 查询满足要求的总记录数
@@ -42,7 +45,6 @@ class Table extends Base {
         ->where('a.is_del',0)
         ->order('id desc')
         ->limit($Page->firstRow.','.$Page->listRows)
-
         ->select();
 
         $show = $Page->show();// 分页显示输出
@@ -86,13 +88,7 @@ class Table extends Base {
         $this->assign('table_data',$table_data);
         return $this->fetch();
 
-
-
     }
-
-
-
-
 
 
 	public function add(){
@@ -107,13 +103,19 @@ class Table extends Base {
 				$post['num_seats'] = 4;
 			}
 			//查询是否有相同的座号
-			$bool = M('table')->where('name',$post['name'])->limit(1)->find();
+            
+
+            $where['store_id'] = $this->store_id;
+            $where['name'] = $post['name'];
+
+			$bool = M('table')->where($where)->limit(1)->find();
 			if($bool){
 				$this->error("桌号重复，请重新输入", url('Table/add'));exit;
 			}
 
 			
 			$add_data = [
+                'store_id'=>$this->store_id,
 				'name'=>$post['name'],
 				'num_seats'=>$post['num_seats'],
 				'add_time'=>time(),
@@ -123,8 +125,11 @@ class Table extends Base {
 			if($id){
 				
                 $web = tpCache('web.web_basehost');
+
 	            $pngurl = $web.'?table_id='.$id;
+
 	            $url = create_code($pngurl,tpCache('web.web_logo'));
+
 				M('table')->where('id',$id)->update(['code_url'=>$url]);
 
 				$this->success("操作成功", url('Table/index'));

@@ -20,6 +20,10 @@ class ComposerStaticInitc94c02985840e0e24a4e6317fb9e1871
         array (
             'Zxing\\' => 6,
         ),
+        'W' => 
+        array (
+            'Workerman\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -30,6 +34,11 @@ class ComposerStaticInitc94c02985840e0e24a4e6317fb9e1871
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
+        ),
+        'G' => 
+        array (
+            'GatewayWorker\\' => 14,
+            'GatewayClient\\' => 14,
         ),
         'E' => 
         array (
@@ -55,6 +64,10 @@ class ComposerStaticInitc94c02985840e0e24a4e6317fb9e1871
         array (
             0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
         ),
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
+        ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
@@ -74,6 +87,14 @@ class ComposerStaticInitc94c02985840e0e24a4e6317fb9e1871
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'GatewayWorker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gateway-worker/src',
+        ),
+        'GatewayClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gatewayclient',
         ),
         'Endroid\\QrCode\\' => 
         array (

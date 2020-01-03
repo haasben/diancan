@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use think\Db;
 use think\Controller;
-class MenuList extends Controller {
+class MenuList extends Common {
 
 	public $arctypeModel;
 	public $archivesModel;
@@ -13,7 +13,8 @@ class MenuList extends Controller {
      * 析构函数
      */
     function __construct() 
-    {
+    {   
+        parent::__construct();
         $this->arctypeModel = Model('Arctype');
         $this->archivesModel = Model('Archives');
     }
@@ -30,25 +31,23 @@ class MenuList extends Controller {
     public function index(){
 
         //菜单列表
-        $menu = $this->arctypeModel->get_cate_data();
+        $menu['cate'] = $this->arctypeModel->get_cate_data();
         
         $menu['child_data'] = array();
         //获取菜单的第一个栏目
-        foreach ($menu as $k => $v) {
-        	
-        	$menu[$k]['child_data'] = $this->archivesModel->get_cate_archives($v['id']);
-
-        	break;
+        if(isset($menu['cate'][0]['id'])){
+        	$menu['child_data'] = $this->archivesModel->get_cate_archives($menu['cate'][0]['id'],$this->table_id);
         }
-
+        
         return return_ajax(1,'success',$menu);
+        
     }
 //切换栏目获取对应的菜品列表
     public function get_cate_info(){
 
     	$id = input('id');
 
-    	$data = $this->archivesModel->get_cate_archives($id);
+    	$data = $this->archivesModel->get_cate_archives($id,$this->table_id);
     	return return_ajax(1,'success',$data);
     }
 
@@ -57,7 +56,7 @@ class MenuList extends Controller {
 
     	$aid = input('aid');
     	$data = $this->archivesModel->get_spec_value_one_archives($aid);
-
+        // dump($data);die;
     	return return_ajax(1,'success',$data);
 
     }
@@ -66,9 +65,8 @@ class MenuList extends Controller {
  	public function shop_info(){
  		$aid = input('aid');
  		$data = $this->archivesModel->shop_info($aid);
+        $data['img'] = $this->archivesModel->archives_img_arr($aid); 
  		return return_ajax(1,'success',$data);
-
-
  	}   
 
 

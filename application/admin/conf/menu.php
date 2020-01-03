@@ -343,19 +343,32 @@ return  array(
                     ),
                 ),
             ),
-            '2003' => array(
+             '2003' => array(
                 'id'=>2003,
                 'parent_id'=>2000,
-                'name' => 'SEO设置',
-                'controller'=>isset($seo_index_arr['controller']) ? $seo_index_arr['controller'] : 'Seo',
-                'action'=>isset($seo_index_arr['action']) ? $seo_index_arr['action'] : 'index',
+                'name' => '友情链接',
+                'controller'=>'Links',
+                'action'=>'index',
                 'url'=>'', 
                 'target'=>'workspace',
-                'icon'=>'fa fa-paper-plane',
+                'icon'=>'fa fa-link',
                 'grade'=>1,
                 'is_menu'=>1,
                 'is_modules'=>1,
                 'child'=>array(
+            // '2003' => array(
+            //     'id'=>2003,
+            //     'parent_id'=>2000,
+            //     'name' => 'SEO设置',
+            //     'controller'=>isset($seo_index_arr['controller']) ? $seo_index_arr['controller'] : 'Seo',
+            //     'action'=>isset($seo_index_arr['action']) ? $seo_index_arr['action'] : 'index',
+            //     'url'=>'', 
+            //     'target'=>'workspace',
+            //     'icon'=>'fa fa-paper-plane',
+            //     'grade'=>1,
+            //     'is_menu'=>1,
+            //     'is_modules'=>1,
+            //     'child'=>array(
                     // '2003001' => array(
                     //     'id'=>2003001,
                     //     'parent_id'=>2003,

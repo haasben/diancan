@@ -72,4 +72,13 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
+   'store_id' => 
+  array (
+    'name' => 'store_id',
+    'type' => 'int(11)',
+    'notnull' => false,
+    'default' => '0',
+    'primary' => false,
+    'autoinc' => false,
+  ),
 );

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/template/index\welcome.htm";i:1577694158;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/template/index\welcome.htm";i:1578022929;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -33,121 +33,116 @@
 <div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
-<?php if(empty($system_explanation_welcome) || empty($system_explanation_welcome_2)): ?>
-<div id="explanation_welcome" style="margin:10px 15px 0px 15px;">
-    <?php if(empty($system_explanation_welcome) || (($system_explanation_welcome instanceof \think\Collection || $system_explanation_welcome instanceof \think\Paginator ) && $system_explanation_welcome->isEmpty())): ?>
-<!--     <div class="explanation" style="color: rgb(44, 188, 163); background-color: #fff!important; width: 99%; height: 100%;">
-        <div class="title checkZoom" data-type="1">
-            <span title="不再提示" style="display: block;"></span>
-        </div>
-        <ul>
-            <li style="color: red;">系统检测当前版本尚未备份数据库，请点击<a href="<?php echo url('Tools/index'); ?>">【数据备份】</a>进入操作。</li>
-        </ul>
-    </div> -->
-    <?php endif; if(empty($system_explanation_welcome_2)): ?>
-    <div class="explanation" style="color: rgb(44, 188, 163); background-color: #fff!important; width: 99%; height: 100%; margin-top: 10px;">
-        <div class="title checkZoom" data-type="2">
-            <span title="不再提示" style="display: block;"></span>
-        </div>
-        <ul>
-            <li style="color: red;">后台登录密码强度：<?php echo getPasswordLevelTitle($admin_login_pwdlevel); ?>，容易被暴力破解，请及时<a href="<?php echo url('Admin/admin_edit', ['id'=>\think\Session::get('admin_info.admin_id')]); ?>">【修改密码】</a>提高安全性。</li>
-        </ul>
-    </div>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
+<style type="text/css">
+ 
+        table
+ 
+        {
+ 
+            border-collapse: collapse;
+ 
+            margin: 0 auto;
+ 
+            text-align: center;
+
+            width: 100%
+ 
+        }
+ 
+        table td, table th
+ 
+        {
+ 
+            border: 1px solid #cad9ea;
+ 
+            color: #666;
+ 
+            height: 30px;
+ 
+        }
+ 
+        table thead th
+ 
+        {
+ 
+            background-color: #CCE8EB;
+ 
+            width: 100px;
+ 
+        }
+ 
+        table tr:nth-child(odd)
+ 
+        {
+ 
+            background: #fff;
+ 
+        }
+ 
+        table tr:nth-child(even)
+ 
+        {
+ 
+            background: #F5FAFA;
+ 
+        }
+ 
+    </style>
+
 <div class="warpper">
     <div class="content start_content">
         <div class="contentWarp">
-            <div class="index_box">
-                <div class="info_count">
-                     <h3><i class="fa fa-bars"></i>快捷导航</h3>
-                     <div class="container-fluid">
-                         <ul>
-                            <?php if(is_array($quickMenu) || $quickMenu instanceof \think\Collection || $quickMenu instanceof \think\Paginator): $i = 0; $__LIST__ = $quickMenu;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                            <li>
-                               <a href="<?php echo url($vo['controller'].'/'.$vo['action'], $vo['vars']); ?>"><p class="navs"><?php echo $vo['title']; ?></p></a>
-                            </li>
-                            <?php endforeach; endif; else: echo "" ;endif; ?>
-                            <li>
-                               <a href="javascript:void(0);" id="quickMenuAdd"><p class="navs"><i style="font-size: 20px;" class="fa fa-plus"></i></p></a>
-                            </li>
-                         </ul>
-                     </div>
-                </div>
-            </div>
+           
             <div class="index_box" >
                 <div class="info_count">
-                     <h3><i class="fa fa-bar-chart"></i>内容统计</h3>
-                     <div class="container-fluid">
-                         <ul>
-                            <?php if(is_array($contentTotal) || $contentTotal instanceof \think\Collection || $contentTotal instanceof \think\Paginator): $i = 0;$__LIST__ = is_array($contentTotal) ? array_slice($contentTotal,0,9, true) : $contentTotal->slice(0,9, true); if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                            <li>
-                               <a href="<?php echo url($vo['controller'].'/'.$vo['action'], $vo['vars']); ?>">
-                                   <h2><?php echo $vo['title']; ?></h2>
-                                   <p><cite><?php echo (isset($vo['total']) && ($vo['total'] !== '')?$vo['total']:'0'); ?></cite></p>
-                               </a>
-                            </li>
-                            <?php endforeach; endif; else: echo "" ;endif; ?>
-                            <li>
-                               <a href="javascript:void(0);" id="contentTotalAdd">
-                                   <h2>添加统计</h2>
-                                   <p><cite><i class="fa fa-plus"></i></cite></p>
-                               </a>
-                            </li>
-                         </ul>
+                     <h3><i class="fa fa-bar-chart"></i>营业额</h3>
+                     <div class="container-fluid" id="main" style="width:100%;height:400px">
+                        
+
+
                      </div>
                 </div>
             </div>
             <div class="section system_section" style="float: none;width: inherit;">
              
-             <!--    <div class="system_section_con">
+                <div class="system_section_con">
                     <div class="sc_title" style="padding: 26px 0 14px;border-bottom: 1px solid #e4eaec;">
                         
-                        <h3><i class="fa fa-tasks"></i>服务器信息</h3>
+                        <h3><i class="fa fa-tasks"></i>最新订单</h3>
                     </div>
                     <div class="sc_warp" id="system_warp" style="display: block;padding-bottom: 20px;">
-                        <table cellpadding="0" cellspacing="0" class="system_table">
-                            <tbody><tr>
-                                <td class="gray_bg">服务器操作系统：</td>
-                                <td><?php echo $sys_info['os']; ?></td>
-                                <td class="gray_bg">服务器域名/IP：</td>
-                                <td><?php echo $sys_info['domain']; ?> [ <?php echo $sys_info['ip']; ?> ]</td>
-                            </tr>
-                            <tr>
-                                <td class="gray_bg">服务器环境：</td>
-                                <td><?php echo $sys_info['web_server']; ?></td>
-                                <td class="gray_bg">PHP 版本：</td>
-                                <td><?php echo $sys_info['phpv']; ?></td>
-                            </tr>
-                            <tr>
-                                <td class="gray_bg">Mysql 版本：</td>
-                                <td><?php echo $sys_info['mysql_version']; ?></td>
-                                <td class="gray_bg">GD 版本：</td>
-                                <td><?php echo $sys_info['gdinfo']; ?></td>
-                            </tr>
-                            <tr>
-                                <td class="gray_bg">文件上传限制：</td>
-                                <td><?php echo $sys_info['fileupload']; ?></td>
-                                <td class="gray_bg">最大占用内存：</td>
-                                <td><?php echo $sys_info['memory_limit']; ?></td>
-                            </tr>
-                            <tr>
-                                <td class="gray_bg">POST限制：</td>
-                                <td><?php echo (isset($sys_info['postsize']) && ($sys_info['postsize'] !== '')?$sys_info['postsize']:'unknown'); ?></td>
-                                <td class="gray_bg">最大执行时间：</td>
-                                <td><?php echo $sys_info['max_ex_time']; ?></td>
-                            </tr>
-                            <tr>
-                                <td class="gray_bg">Zip支持：</td>
-                                <td><?php echo $sys_info['zip']; ?></td>
-                                <td class="gray_bg">Zlib支持：</td>
-                                <td><?php echo $sys_info['zlib']; ?></td>
-                            </tr>
+                        <table  class="order_list" >
+                            <tbody>
+                                <tr>
+                                    <td>订单号</td>
+                                    <td>桌号</td>
+                                    <td>订单金额</td>
+                                    <td>订单状态</td>
+                                    <td>订单时间</td>
+                                    <td>支付时间</td>
+                                    <td>操作</td>
+                                </tr>
+                                <?php if(is_array($new_order) || $new_order instanceof \think\Collection || $new_order instanceof \think\Paginator): $i = 0; $__LIST__ = $new_order;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                <tr>
+                                    <td><?php echo $v['order_code']; ?></td>
+                                    <td><?php echo $v['name']; ?></td>
+                                    <td><?php echo $v['order_total_amount']; ?></td>
+                                    <td><?php switch($v['order_status']): case "0": ?>未付款<?php break; case "-1": ?>订单取消<?php break; case "4": ?>订单过期<?php break; default: ?><span style="color: red">已付款</span>
+                                        <?php endswitch; ?>
+                                    </td>
+                                    <td><?php echo date('Y-m-d H:i:s',$v['add_time']); ?></td>
+                                    <td><?php if($v['pay_time']>0): ?><?php echo date('Y-m-d H:i:s',$v['pay_time']); else: ?>未支付<?php endif; ?></td>
+                                    <td><a href="<?php echo url('Shop/order_details',array('order_id'=>$v['order_id'])); ?>">详情</a></td>
+
+                                </tr>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+
+
+                            
                             </tbody>
                         </table>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -157,143 +152,53 @@
         <b><?php echo htmlspecialchars_decode($global['web_copyright']); ?></b>
     </p>
 </div>
+<script type="text/javascript" src="/public/plugins/echarts/echarts.min.js"></script>
 <script type="text/javascript">
-    $(function () {
-        // check_upgrade_version();
-        $.get("<?php echo url('Ajax/welcome_handle', ['_ajax'=>1]); ?>"); // 进入欢迎页面需要异步处理的业务
-        check_language_tips();
+  var myChart = echarts.init(document.getElementById('main'));        
+        option = {
+        xAxis: {
+                type: 'category',
+                data: [
+                <?php if(is_array($weeks_order['day']) || $weeks_order['day'] instanceof \think\Collection || $weeks_order['day'] instanceof \think\Paginator): $i = 0; $__LIST__ = $weeks_order['day'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                '<?php echo $v['time']; ?>',
+                <?php endforeach; endif; else: echo "" ;endif; ?>
+                ]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [
+                 <?php if(is_array($weeks_order['day']) || $weeks_order['day'] instanceof \think\Collection || $weeks_order['day'] instanceof \think\Paginator): $i = 0; $__LIST__ = $weeks_order['day'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                    <?php echo $v['sum']; ?>,
+                <?php endforeach; endif; else: echo "" ;endif; ?>
 
-        // 检测语言版本
-        function check_language_tips()
-        {
-            if (__main_lang__ != __lang__) {
-                var language_title = $('#language_title', window.parent.document).html();
-                layer.msg('当前后台已切换至【'+language_title+'】编辑状态！', {time:3000});
-            }
-        }
-
-        // 版本检测更新弹窗
-        function check_upgrade_version(){
-            $.ajax({
-                type : "GET",
-                url  : "<?php echo url('Ajax/check_upgrade_version', ['_ajax'=>1]); ?>",
-                data : {},
-                dataType : "JSON",
-                success: function(res) {
-                    if (1 == res.code) {
-                        if (2 == res.data.code) {
-
-                            /*显示顶部导航更新提示*/
-                            try{
-                                $("#upgrade_filelist", window.parent.document).html(res.data.msg.upgrade);    
-                                $("#upgrade_intro", window.parent.document).html(res.data.msg.intro);
-                                $("#upgrade_notice", window.parent.document).html(res.data.msg.notice);
-                                $('#a_upgrade', window.parent.document).attr('data-version',res.data.msg.key_num)
-                                    .attr('data-max_version',res.data.msg.max_version)
-                                    .show();
-                            }catch(e){}
-                            /*--end*/
-                            
-                            $('#upgrade_filelist').html(res.data.msg.upgrade);
-                            $('#upgrade_intro').html(res.data.msg.intro);
-                            $('#upgrade_notice').html(res.data.msg.notice);
-                            $('#a_upgrade').attr('data-version', res.data.msg.key_num)
-                            .attr('data-max_version', res.data.msg.max_version)
-                            .attr('title', res.data.msg.tips);
-                            $('#a_upgrade').html('检测到新版本'+res.data.msg.key_num+'[点击查看]').css('color', '#F00');
-
-                            <?php if(-1 != $web_show_popup_upgrade AND (0 >= \think\Session::get('admin_info.role_id') OR 1 == \think\Session::get('admin_info.auth_role_info.online_update'))): ?>
-                                btn_upgrade($("#a_upgrade"), 1);
-                            <?php endif; ?>
-                        } else {
-                            $('#td_upgrade_msg').html(res.data.msg);
-                        }
+                ],
+                type: 'line'
+            },
+            {   
+                name:'总量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
                     }
-                }
-            }); 
-        }
-    });
-
-    $(function() {
-        //操作提示缩放动画
-        $(".checkZoom").click(function(){
-            $(this).parent().animate({
-                color: "#FFF",
-                backgroundColor: "#4FD6BE",             
-                width: "0",
-                height: "0",                             
-            },300,function(){
-                $(this).remove();
-            });
-            if(1 >= $('#explanation_welcome').find('div.explanation').length) {
-                $('#explanation_welcome').remove();
+                },
+                areaStyle: {normal: {}},
+                data:[
+                    <?php if(is_array($weeks_order['day']) || $weeks_order['day'] instanceof \think\Collection || $weeks_order['day'] instanceof \think\Paginator): $i = 0; $__LIST__ = $weeks_order['day'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                        <?php echo $v['sum']; ?>,
+                    <?php endforeach; endif; else: echo "" ;endif; ?>
+                ]
             }
-            var url = eyou_basefile+"?m=admin&c=Ajax&a=explanation_welcome&type="+$(this).attr('data-type')+"&lang="+__lang__+"&_ajax=1";
-            $.get(url);
-        });
 
-        checkInlet(); // 自动检测隐藏index.php
-    });
 
-    // 自动检测隐藏index.php
-    function checkInlet() {
-        layer.open({
-            type: 2,
-            title: false,
-            area: ['0px', '0px'],
-            shade: 0.0,
-            closeBtn: 0,
-            shadeClose: true,
-            content: '//<?php echo \think\Request::instance()->host(); ?>/api/Rewrite/setInlet.html',
-            success: function(layero, index){
-                layer.close(index);
-                var body = layer.getChildFrame('body', index);
-                var content = body.html();
-                if (content.indexOf("Congratulations on passing") == -1)
-                {
-                    $.ajax({
-                        type : "POST",
-                        url  : "/index.php?m=api&c=Rewrite&a=setInlet&_ajax=1",
-                        data : {seo_inlet:0},
-                        dataType : "JSON",
-                        success: function(res) {
-
-                        }
-                    }); 
-                }
-            }
-        });
-    }
-
-    // 新增内容统计
-    $('#contentTotalAdd').click(function(){
-        //iframe窗
-        var iframes = layer.open({
-            type: 2,
-            title: '内容统计管理',
-            fixed: true, //不固定
-            shadeClose: false,
-            shade: 0.3,
-            // maxmin: false, //开启最大化最小化按钮
-            area: ['550px', '220px'],
-            content: "<?php echo url('Index/ajax_content_total'); ?>"
-        });
-    });
-
-    // 新增快捷导航
-    $('#quickMenuAdd').click(function(){
-        //iframe窗
-        var iframes = layer.open({
-            type: 2,
-            title: '快捷导航管理',
-            fixed: true, //不固定
-            shadeClose: false,
-            shade: 0.3,
-            // maxmin: false, //开启最大化最小化按钮
-            area: ['550px', '300px'],
-            content: "<?php echo url('Index/ajax_quickmenu'); ?>"
-        });
-    });
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
 </script>
 <br/>
 <div id="goTop">

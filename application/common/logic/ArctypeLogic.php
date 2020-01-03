@@ -33,7 +33,7 @@ class ArctypeLogic extends Model
      * @param   array   $map      查询条件
      * @return  mix
      */
-    public function arctype_list($id = 0, $selected = 0, $re_type = true, $level = 0, $map = array(), $is_cache = true)
+    public function arctype_list($id = 0, $selected = 0, $re_type = true, $level = 0, $map = array(), $is_cache = true,$store_id)
     {
         static $res = NULL;
         // $res = NULL;
@@ -55,6 +55,10 @@ class ArctypeLogic extends Model
                 }
             }
             /*--end*/
+            if($store_id != 0){
+                $where['store_id'] = $store_id;
+            }
+            
 
             /*多语言 by 小虎哥*/
             if (empty($map['lang'])) {

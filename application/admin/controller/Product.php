@@ -239,6 +239,7 @@ class Product extends Base
             // --存储数据
             $newData = array(
                 'typeid'=> empty($post['typeid']) ? 0 : $post['typeid'],
+                'store_id'=>$this->store_id,
                 'channel'   => $this->channeltype,
                 'is_b'      => empty($post['is_b']) ? 0 : $post['is_b'],
                 'is_head'      => empty($post['is_head']) ? 0 : $post['is_head'],

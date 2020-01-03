@@ -37,10 +37,12 @@ class System extends Base
      */
     public function web()
     {
+
         $inc_type =  'web';
 
         if (IS_POST) {
             $param = input('post.');
+
             $param['web_keywords'] = str_replace('，', ',', $param['web_keywords']);
             $param['web_description'] = filter_line_return($param['web_description']);
             
@@ -89,13 +91,39 @@ class System extends Base
                 }
             }
 
-            tpCache($inc_type, $param);
-            write_global_params($this->admin_lang); // 写入全局内置参数
+                $where['lang'] = $this->admin_lang;
+                $where['store_id'] = $this->store_id;
+            foreach ($param as $k => $v) {
+                
+                $where['name'] = $k;
+                $bool = Db::name('config')->where($where)->update([
+                    'value'=>$v,
+                    'update_time'=>time()
+                ]);//缓存key存在且值有变更新此项
+                // dump($bool);
+            }
+
+
+
+            // die;
+            //tpCache($inc_type, $param);
+            //write_global_params($this->admin_lang); // 写入全局内置参数
             $this->success('操作成功', url('System/web'));
             exit;
         }
 
         $config = tpCache($inc_type);
+        $config = array();
+        $res = Db::name('config')->where('store_id',$this->store_id)
+            ->where('is_del',0)
+            ->where('lang',$this->admin_lang)
+            ->where('inc_type',$inc_type)
+            ->select();
+        // dump($res);
+        foreach($res as $k=>$val){
+            $config[$val['name']] = $val['value'];
+        }
+
         // 网站logo
         if (is_http_url($config['web_logo'])) {
             $config['web_logo_is_remote'] = 1;
@@ -120,6 +148,7 @@ class System extends Base
                 'b.lang'    => $this->admin_lang,
                 'a.inc_type'    => $inc_type,
                 'b.is_del'  => 0,
+                'b.store_id' =>$this->store_id,
             ])
             ->order('a.attr_id asc')
             ->select();
@@ -865,11 +894,13 @@ class System extends Base
                 'name'  => ['LIKE', "web_attr_%"],
                 'lang'  => $this->admin_lang,
                 'is_del'    => 0,
+                'store_id'=>$this->store_id,
             ])->getAllWithIndex('name');
         $condition['a.attr_var_name'] = array('IN', array_keys($attr_var_names));
 
         $count = M('config_attribute')->alias('a')->where($condition)->count();// 查询满足要求的总记录数
         $pageObj = new Page($count, 100);// 实例化分页类 传入总记录数和每页显示的记录数
+        $condition['b.store_id'] = $this->store_id;
         $list = M('config_attribute')->alias('a')
             ->field('a.*, b.id')
             ->join('__CONFIG__ b', 'b.name = a.attr_var_name AND b.lang = a.lang', 'LEFT')
@@ -897,6 +928,7 @@ class System extends Base
             if (empty($post['attr_name'])) {
                 $this->error('至少新增一个自定义变量！');
             }
+
 
             // 数据拼装
             $addData = $editData = [];
@@ -962,6 +994,7 @@ class System extends Base
                 }
                 /*end*/
             }
+
             if (!empty($editData)) {
                 $r = model('ConfigAttribute')->saveAll($editData);
                 if ($r) {
@@ -971,13 +1004,37 @@ class System extends Base
                         foreach ($addData as $key => $val) {
                             $configData[$val['attr_var_name']] = '';
                         }
+
+                       //  dump(is_language());
+                       // dump($langRow);die;
                         // 多语言
                         if (is_language()) {
-                            foreach ($langRow as $key => $val) {
-                                tpCache('web', $configData, $val['mark']);
+                            
+                            foreach ($configData as $k => $v) {
+                                Db::name('config')->insert([
+                                    'inc_type'=>'web',
+                                    'name'=>$k,
+                                    'store_id'=>$this->store_id,
+                                ]);
                             }
+
+
+                            // foreach ($langRow as $key => $val) {
+                            //     tpCache('web', $configData, $val['mark']);
+                            // }
                         } else { // 单语言
-                            tpCache('web', $configData);
+
+
+                            foreach ($configData as $k => $v) {
+                                Db::name('config')->insert([
+                                    'inc_type'=>'web',
+                                    'name'=>$k,
+                                    'store_id'=>$this->store_id,
+                                ]);
+                            }
+
+
+                            //tpCache('web', $configData);
                         }
                     }
                     // end

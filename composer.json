@@ -1,6 +1,8 @@
 {
     "require": {
         "davidnineroc/qrcodeplus": "^1.0",
-        "endroid/qr-code": "^3.5"
+        "endroid/qr-code": "^3.5",
+        "workerman/gateway-worker": "^3.0",
+        "workerman/gatewayclient": "^3.0"
     }
 }

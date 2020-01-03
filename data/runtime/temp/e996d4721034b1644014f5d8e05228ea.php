@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:44:"./application/admin/template/links\index.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:55:"D:\WWW\diancan\application\admin\template\links\bar.htm";i:1571728724;s:53:"D:\WWW\diancan\application\admin\template\seo\bar.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/links\index.htm";i:1578017448;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -45,39 +45,7 @@
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
 <div class="page">
-    
-        <div class="fixed-bar">
-        <div class="item-title">
-            <div class="subject">
-                <h3>SEO设置</h3>
-                <h5></h5>
-            </div>
-            <ul class="tab-base nc-row">
-                <?php if($main_lang == $admin_lang): ?>
-                <li><a href="<?php echo url('Seo/index',['inc_type'=>'seo']); ?>" <?php if('seo'==$inc_type): ?>class="current"<?php endif; ?>><span>URL配置</span></a></li>
-                <?php endif; if($main_lang == $admin_lang): ?>
-                <li><a href="<?php echo url('Seo/index',['inc_type'=>'sitemap']); ?>" <?php if('sitemap'==$inc_type): ?>class="current"<?php endif; ?>><span>Sitemp</span></a></li>
-                <?php endif; if(is_check_access('Links@index') == '1'): ?>
-                <li><a href="<?php echo url('Links/index'); ?>" <?php if('Links'==CONTROLLER_NAME): ?>class="current"<?php endif; ?>><span>友情链接</span></a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div>
-<!--     <div class="fixed-bar">
-        <div class="item-title">
-            <div class="subject">
-                <h3>友情链接</h3>
-                <h5></h5>
-            </div>
-            <ul class="tab-base nc-row">
-                <li><a href="<?php echo url("Links/index"); ?>" class="tab <?php if(\think\Request::instance()->action() == 'index'): ?>current<?php endif; ?>"><span>友链列表</span></a></li>
 
-                <?php if(is_check_access(CONTROLLER_NAME.'@add') == '1'): ?>
-                <li><a href="<?php echo url("Links/add"); ?>" class="tab <?php if(in_array(\think\Request::instance()->action(), array('add','edit'))): ?>current<?php endif; ?>"><span><?php if('edit' == \think\Request::instance()->action()): ?>编辑链接<?php else: ?>新增链接<?php endif; ?></span></a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div> -->
     <div class="flexigrid">
         <div class="mDiv">
             <div class="ftitle">

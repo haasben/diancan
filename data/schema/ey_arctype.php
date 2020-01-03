@@ -9,6 +9,15 @@ return array (
     'primary' => true,
     'autoinc' => true,
   ),
+  'store_id' => 
+  array (
+    'name' => 'store_id',
+    'type' => 'int(11)',
+    'notnull' => false,
+    'default' => '0',
+    'primary' => false,
+    'autoinc' => false,
+  ),
   'channeltype' => 
   array (
     'name' => 'channeltype',

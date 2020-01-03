@@ -36,9 +36,10 @@ class Archives extends Base
         // 目录列表
         $arctypeLogic = new ArctypeLogic(); 
         $where['is_del'] = '0'; // 回收站功能
-        $arctype_list = $arctypeLogic->arctype_list(0, 0, false, 0, $where, false);
+        $arctype_list = $arctypeLogic->arctype_list(0, 0, false, 0, $where, false,$this->store_id);
         $zNodes = "[";
         foreach ($arctype_list as $key => $val) {
+
             $current_channel = $val['current_channel'];
             if (!empty($val['weapp_code'])) {
                 // 插件栏目
@@ -70,6 +71,7 @@ class Archives extends Base
             $zNodes .= "},";
         }
         $zNodes .= "]";
+
         $this->assign('zNodes', $zNodes);
 
         return $this->fetch();
@@ -80,6 +82,7 @@ class Archives extends Base
      */
     public function index_archives()
     {
+
         $assign_data = array();
         $condition = array();
         // 获取到所有URL参数
@@ -95,6 +98,7 @@ class Archives extends Base
                 ->join('__CHANNELTYPE__ b', 'a.current_channel = b.id', 'LEFT')
                 ->where('a.id', 'eq', $typeid)
                 ->find();
+
             $ctl_name = $row['ctl_name'];
             $current_channel = $row['id'];
             if (6 == $current_channel) {
@@ -190,6 +194,11 @@ class Archives extends Base
         $condition['a.is_del'] = array('eq', 0);
         /*--end*/
 
+        //店铺
+        if($this->store_id != 0){
+           $condition['a.store_id'] = $this->store_id; 
+        }
+        
         /*自定义排序*/
         $orderby = input('param.orderby/s');
         $orderway = input('param.orderway/s');

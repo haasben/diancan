@@ -20,6 +20,7 @@ use think\Session;
 class Base extends Controller {
 
     public $session_id;
+    public $store_id;
 
     /**
      * 析构函数
@@ -34,8 +35,10 @@ class Base extends Controller {
 
         $this->global_assign();
 
+        $this->store_id = session('admin_info')['store_id'];
         /*---------*/
         $is_eyou_authortoken = session('web_is_authortoken');
+
         $is_eyou_authortoken = !empty($is_eyou_authortoken) ? $is_eyou_authortoken : 0;
         $this->assign('is_eyou_authortoken', $is_eyou_authortoken);
         /*--end*/

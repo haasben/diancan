@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1577763441;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578034695;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -192,6 +192,11 @@
     </div>
   </div>
 </div>
+
+<audio id="myaudio" src="/public/static/common/audio/new_order.mp3" controls="controls"  loop="loop" 
+preload="preload" muted="muted" >
+    不支持audio标签
+</audio>
 <script type="text/javascript">
 
   function valide(obj)
@@ -210,6 +215,55 @@
       var url = "<?php echo url('Index/switch_map'); ?>";
       workspace.window.location.href = url;
   }
+
+  $(function(){
+
+     /**
+     * 与GatewayWorker建立websocket连接，域名和端口改为你实际的域名端口，
+     * 其中端口为Gateway端口，即start_gateway.php指定的端口。
+     * start_gateway.php 中需要指定websocket协议，像这样
+     * $gateway = new Gateway(websocket://0.0.0.0:7272);
+     */
+    var ws = new WebSocket("ws://"+document.domain+":8282");
+
+    ws.onopen = function()
+       {
+          // Web Socket 已连接上，使用 send() 方法发送数据
+          var data = '{"type":"join_room","group_id":"1<?php echo $store_id; ?>"}';
+          // var data = '{"type":"add_timer","group_id":1,"pack_type":2}';
+          ws.send(data);
+       };
+    // 服务端主动推送消息时会触发这里的onmessage
+    ws.onmessage = function(e){
+        // json数据转换成js对象
+        var data = JSON.parse(e.data);
+        var type = data.type || '';
+        switch(type){
+            case 'join_room':
+                break;
+            case 'new_order':
+                document.getElementById("myaudio").play();
+                alert(data.msg);
+                break;
+            default :
+                console.log(e.data);
+        }
+    };
+    
+    ws.onclose = function(){
+        console.log('链接关闭');
+    }
+
+    var t2 = window.setInterval(function(){
+
+      ws.send('{"type":"ping"}');
+
+    },5000);
+   
+
+
+
+  })
 </script>
 </body>
 </html>

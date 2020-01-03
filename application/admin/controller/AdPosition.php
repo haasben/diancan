@@ -45,6 +45,10 @@ class AdPosition extends Base
         // 多语言
         $condition['a.lang'] = array('eq', $this->admin_lang);
 
+         if($this->store_id != 0){
+            $condition['a.store_id'] = $this->store_id;
+        }
+
         $adPositionM =  M('ad_position');
         $count = $adPositionM->alias('a')->where($condition)->count();// 查询满足要求的总记录数
         $Page = new Page($count, config('paginate.list_rows'));// 实例化分页类 传入总记录数和每页显示的记录数
@@ -83,13 +87,14 @@ class AdPosition extends Base
             $map = array(
                 'title' => trim($post['title']),
                 'lang'  => $this->admin_lang,
+                'store_id'=>$this->store_id,
             );
             if(M('ad_position')->where($map)->count() > 0){
                 $this->error('该广告名称已存在，请检查', url('AdPosition/index'));
             }
-
             // 添加广告位置表信息
             $data = array(
+                'store_id'    => $this->store_id,
                 'title'       => trim($post['title']),
                 'intro'       => $post['intro'],
                 'admin_id'    => session('admin_id'),

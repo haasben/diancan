@@ -30,6 +30,9 @@ class Links extends Base
 
         // 多语言
         $condition['lang'] = array('eq', $this->admin_lang);
+        if($this->store_id != 0){
+            $condition['store_id'] = $this->store_id;
+        }
 
         $linksM =  M('links');
         $count = $linksM->where($condition)->count('id');// 查询满足要求的总记录数
@@ -62,6 +65,7 @@ class Links extends Base
             $post['logo'] = $logo;
             // --存储数据
             $nowData = array(
+                'store_id'  => $this->store_id,
                 'typeid'    => empty($post['typeid']) ? 1 : $post['typeid'],
                 'url'    => trim($post['url']),
                 'lang'  => $this->admin_lang,

@@ -93,6 +93,12 @@ class Shop extends Base {
         if (!empty($order_status)) {
             $Where['order_status'] = $order_status;
         }
+
+        if($this->store_id != 0){
+            $Where['store_id'] = $this->store_id;
+        }
+
+        // dump($where);
         // 查询满足要求的总记录数
         $count = $this->shop_order_db->where($Where)->count('order_id');
         // 实例化分页类 传入总记录数和每页显示的记录数
