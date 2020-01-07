@@ -9,6 +9,15 @@ return array (
     'primary' => true,
     'autoinc' => true,
   ),
+  'store_id' => 
+  array (
+    'name' => 'store_id',
+    'type' => 'smallint(5) unsigned',
+    'notnull' => false,
+    'default' => NULL,
+    'primary' => true,
+    'autoinc' => true,
+  ),
   'user_name' => 
   array (
     'name' => 'user_name',

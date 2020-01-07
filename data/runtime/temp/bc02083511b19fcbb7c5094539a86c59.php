@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578034695;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578386704;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -118,22 +118,7 @@
                 <i class="fa fa-toggle-on"></i>
                 <span class="hidden-xs">功能开关</span>
               </a>
-              <?php endif; if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): ?>
-              <!-- 商业授权 -->   
-<!--               <em class="eyou_tool em_authortoken" data-expanded="close">
-                <a class="btn btn-default dropdown-toggle" title="购买后可去除所有版权提示" href="javascript:void(0);" onclick="valide(this);">
-                  <i class="fa fa-bookmark"></i>
-                  <span class="hidden-xs">购买授权</span>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="shouquan">
-                    <li class="ey-tool-list text-center"><a target="_blank" class="liaojie" href="http://www.eyoucms.com/buy/">了解商业授权</a></li>
-                    <li class="ey-tool-list text-center">
-                      <input class="btn btn-primary" type="button" onclick="$('.em_authortoken').toggleClass('open');openItem('Index|authortoken');" value="检测是否正版" />
-                    </li>
-                </ul>
-               </em> -->
-              <!-- 商业授权 -->   
-              <?php endif; ?>
+              <?php endif; if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): endif; ?>
 
               <!-- 多语言 -->
               <em id="Language_index" class="eyou_tool em_lang" data-expanded="close" <?php if(empty($web_language_switch)): ?>style="display: none;"<?php endif; ?>>
@@ -152,15 +137,7 @@
                </em>
               <!-- 多语言 -->   
 
-              <!-- 服务器升级 -->   
- <!--              <div id="upgrade_filelist" style="display:none;"></div> 
-              <div id="upgrade_intro" style="display:none;"></div> 
-              <div id="upgrade_notice" style="display:none;"></div> 
-              <a class="btn btn-default dropdown-toggle" style="display: none;color:#F00;" title="不升级可能有安全隐患" href="javascript:void(0);" id="a_upgrade" data-version="" data-max_version="" data-iframe="parent" data-tips_url="<?php echo url('Upgrade/setPopupUpgrade'); ?>" data-upgrade_url="<?php echo url('Upgrade/OneKeyUpgrade'); ?>" data-check_authority="<?php echo url('Upgrade/check_authority'); ?>">
-                <i class="fa fa-info-circle"></i>
-                <span class="hidden-xs">系统更新</span>
-              </a> -->
-              <!-- 服务器升级 end -->
+
               
             </div>
             <span class="avatar">
@@ -229,7 +206,7 @@ preload="preload" muted="muted" >
     ws.onopen = function()
        {
           // Web Socket 已连接上，使用 send() 方法发送数据
-          var data = '{"type":"join_room","group_id":"1<?php echo $store_id; ?>"}';
+          var data = '{"type":"join_room","group_id":"<?php echo $store_id; ?>"}';
           // var data = '{"type":"add_timer","group_id":1,"pack_type":2}';
           ws.send(data);
        };
@@ -245,6 +222,14 @@ preload="preload" muted="muted" >
                 document.getElementById("myaudio").play();
                 alert(data.msg);
                 break;
+            case 'add_vegetables':
+                document.getElementById("myaudio").play();
+                alert(data.msg);
+                break;
+
+
+
+                
             default :
                 console.log(e.data);
         }

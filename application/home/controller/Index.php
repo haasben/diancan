@@ -64,9 +64,9 @@ class Index extends Base
             }
         }
         /*--end*/
-
-        $html = $this->fetch(":{$viewfile}");
         
+        $html = $this->fetch(":{$viewfile}");
+
         return $html;
     }
 

@@ -97,8 +97,7 @@ class Events
    public static function onWorkerStart($worker)
     {
 
-      // self::$db = new \Workerman\MySQL\Connection('127.0.0.1', '3306', 'root', 'root', '10sgame');
-      // self::$url = 'http://game.io';
+
     }
   	
   

@@ -46,8 +46,11 @@ class Member extends Base {
         $this->shop_order_details_db = Db::name('shop_order_details');  // 会员订单副表
         /*结束*/
 
+
+
         // 是否开启支付功能设置
         $this->userConfig = getUsersConfigData('all');
+
         $this->assign('userConfig',$this->userConfig);
     }
 
@@ -1014,8 +1017,10 @@ class Member extends Base {
     public function pay_set(){
         $payConfig = $this->userConfig;
 
+
+        $pay_wechat_config = Db::name('users_config')->where('store_id',$this->store_id)->where('name','pay_wechat_config')->value('value');
         /*微信支付配置*/
-        $wechat = !empty($payConfig['pay_wechat_config']) ? $payConfig['pay_wechat_config'] : [];
+        $wechat = !empty($pay_wechat_config) ? $pay_wechat_config : [];
         $this->assign('wechat',unserialize($wechat));
         /*--end*/
 
@@ -1050,16 +1055,16 @@ class Member extends Base {
                 $this->error('微信AppSecret值不能为空！');
             }
 
-            $data = model('Pay')->payForQrcode($post['wechat']);
-            if ($data['return_code'] == 'FAIL') {
-                if ('签名错误' == $data['return_msg']) {
-                    $this->error('微信KEY值错误！');
-                }else if ('appid不存在' == $data['return_msg']) {
-                    $this->error('微信AppId错误！');
-                }else if ('商户号mch_id或sub_mch_id不存在' == $data['return_msg']) {
-                    $this->error('微信商户号错误！');
-                }
-            }
+            // $data = model('Pay')->payForQrcode($post['wechat']);
+            // if ($data['return_code'] == 'FAIL') {
+            //     if ('签名错误' == $data['return_msg']) {
+            //         $this->error('微信KEY值错误！');
+            //     }else if ('appid不存在' == $data['return_msg']) {
+            //         $this->error('微信AppId错误！');
+            //     }else if ('商户号mch_id或sub_mch_id不存在' == $data['return_msg']) {
+            //         $this->error('微信商户号错误！');
+            //     }
+            // }
 
             foreach ($post as $key => $val) {
                 getUsersConfigData('pay', ['pay_wechat_config'=>serialize($val)]);

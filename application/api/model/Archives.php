@@ -13,7 +13,7 @@ class Archives extends Model
 //获取某个分类下的所有菜品
 	public function get_cate_archives($cate_id,$table_id){
 		$data = self::alias('a')
-			->field('a.aid,a.typeid,a.title,a.litpic,a.users_price,oc.content,oc.discount,oc.rebate')
+			->field('a.aid,a.typeid,a.title,a.litpic,a.users_price,oc.content,oc.discount,oc.rebate,a.stock_count')
 			->join('o_product_content oc','oc.aid = a.aid')
 			->where('a.typeid',$cate_id)
 			->where('a.is_del',0)
@@ -102,7 +102,7 @@ class Archives extends Model
 	public function shop_info($aid){
 
 		$data = self::alias('a')
-			->field('a.aid,a.typeid,a.title,a.litpic,a.users_price,oc.content,oc.discount,oc.rebate')
+			->field('a.aid,a.typeid,a.title,a.litpic,a.users_price,oc.content,oc.discount,oc.rebate,a.stock_count')
 			->join('o_product_content oc','oc.aid = a.aid')
 			->where('a.aid',$aid)
 			->limit(1)

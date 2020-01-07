@@ -15,6 +15,8 @@ class Table extends Base {
 	public function index(){
 
 
+
+
 		$list = array();
         $get = input('get.');
         $keywords = input('keywords/s');
@@ -121,14 +123,58 @@ class Table extends Base {
 				'add_time'=>time(),
 
 			];
+            $pay_wechat_config = Db::name('users_config')->where('name','pay_wechat_config')
+            ->where('store_id',$this->store_id)
+            ->where('lang','cn')
+            ->where('inc_type','pay')
+            ->limit(1)
+            ->value('value');
+            if(empty($pay_wechat_config)){
+
+                $this->error('请先配置小程序信息');
+            }
+           
 			$id = M('table')->insertGetId($add_data);
 			if($id){
-				
-                $web = tpCache('web.web_basehost');
 
-	            $pngurl = $web.'?table_id='.$id;
+                 $pay_wechat_config = unserialize($pay_wechat_config);
+                 // dump($pay_wechat_config);
+                // $web = M('config')
+                //     ->where('store_id',$this->store_id)
+                //     ->where('name','web_basehost')
+                //     ->value('value');
 
-	            $url = create_code($pngurl,tpCache('web.web_logo'));
+                // $web_logo = M('config')
+                //     ->where('store_id',$this->store_id)
+                //     ->where('name','web_logo')
+                //     ->value('value');
+	            // $pngurl = $web.'?table_id='.$id;
+                //调用小程序接口生成带参数的小程序码
+                $appid = $pay_wechat_config['appid'];
+                $secret = $pay_wechat_config['appsecret'];
+
+                $data_sting = [
+                    'scene' =>'table_id'.$id,
+                ];
+                $data_sting = json_encode($data_sting);
+                $access_token = GetWeChatMiniAccessToken($appid,$secret);
+
+                $access_token = $access_token['token'];
+                $wx_code = raw_post('https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token='.$access_token,$data_sting);
+
+                $date = date('Ymd');
+                $dir = ROOT_PATH.'uploads/qrcode/'.$date;
+                 if (!is_dir($dir)){
+                    if (mkdir($dir, 0777, true)) {
+                    }
+                }
+                $file_name = md5(mt_rand(100,12542).time()).'.png';
+
+                $url = file_put_contents($dir.DS.$file_name,$wx_code);
+                $url = '/uploads/qrcode/'.$date.'/'.$file_name;
+
+
+	            // $url = create_code($pngurl,$web_logo);
 
 				M('table')->where('id',$id)->update(['code_url'=>$url]);
 
@@ -163,7 +209,6 @@ class Table extends Base {
             $r = M('table')->where('id','IN',$id_arr)->delete();
             if ($r) {
                 
-
                 $this->success('删除成功');
             } else {
                 $this->error('删除失败');

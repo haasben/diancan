@@ -61,6 +61,9 @@ class RecycleBin extends Base
 
         $condition['a.is_del'] = 1;
         $condition['a.lang']    = $this->admin_lang;
+        if(session('admin_info')['admin_id'] !=1){
+            $condition['a.store_id'] = $this->store_id;
+        }
 
         $count = $this->arctype->alias('a')->where($condition)->count();// 查询满足要求的总记录数
         $pageObj = new Page($count, config('paginate.list_rows'));// 实例化分页类 传入总记录数和每页显示的记录数
@@ -369,6 +372,10 @@ class RecycleBin extends Base
 
         $condition['a.is_del'] = array('eq', 1); // 回收站功能
 
+         if(session('admin_info')['admin_id'] !=1){
+            $condition['a.store_id'] = $this->store_id;
+        }
+
         /**
          * 数据查询，搜索出主键ID的值
          */
@@ -551,13 +558,18 @@ class RecycleBin extends Base
             $condition['a.attr_name'] = array('LIKE', "%{$keywords}%");
         }
 
+        $where['is_del'] = 1;
+        $where['lang'] = $this->admin_lang;
+         if(session('admin_info')['admin_id'] !=1){
+            $where['store_id'] = $this->store_id;
+        }
+
         $attr_var_names = M('config')->field('name')
-            ->where([
-                'is_del'    => 1,
-                'lang'  => $this->admin_lang,
-            ])->getAllWithIndex('name');
+            ->where($where)->getAllWithIndex('name');
         $condition['a.attr_var_name'] = array('IN', array_keys($attr_var_names));
         $condition['a.lang']    = $this->admin_lang;
+
+
 
         $count = M('config_attribute')->alias('a')->where($condition)->count();// 查询满足要求的总记录数
         $pageObj = new Page($count, config('paginate.list_rows'));// 实例化分页类 传入总记录数和每页显示的记录数
@@ -665,9 +677,13 @@ class RecycleBin extends Base
         $condition['a.is_del'] = array('eq', 1); // 回收站功能
 
         $count = $this->product_attribute->alias('a')->where($condition)->count();// 查询满足要求的总记录数
+
+        if(session('admin_info')['admin_id'] != 1){
+            $condition['b.store_id'] = $this->store_id;
+        }
         $pageObj = new Page($count, config('paginate.list_rows'));// 实例化分页类 传入总记录数和每页显示的记录数
         $list = $this->product_attribute->alias('a')
-            ->field('a.*, b.typename')
+            ->field('a.*, b.typename,b.store_id')
             ->join('__ARCTYPE__ b', 'a.typeid = b.id', 'LEFT')
             ->where($condition)
             ->order('a.update_time desc')
@@ -812,6 +828,12 @@ class RecycleBin extends Base
         $condition['a.is_del'] = array('eq', 1); // 回收站功能
 
         $count = $this->guestbook_attribute->alias('a')->where($condition)->count();// 查询满足要求的总记录数
+
+        if(session('admin_info')['admin_id'] !=1){
+            $condition['b.store_id'] = $this->store_id;
+        }
+
+
         $pageObj = new Page($count, config('paginate.list_rows'));// 实例化分页类 传入总记录数和每页显示的记录数
         $list = $this->guestbook_attribute->alias('a')
             ->field('a.*, b.typename')

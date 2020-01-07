@@ -345,7 +345,13 @@ class Product extends Base
         // 商品规格
         if (isset($shopConfig['shop_open_spec']) && 1 == $shopConfig['shop_open_spec']) {
             // 预设值名称
-            $assign_data['preset_value'] = Db::name('product_spec_preset')->where('lang',$this->admin_lang)->field('preset_id,preset_mark_id,preset_name')->group('preset_mark_id')->order('preset_mark_id desc')->select();
+            $assign_data['preset_value'] = Db::name('product_spec_preset')
+            ->where('store_id',$this->store_id)
+            ->where('lang',$this->admin_lang)
+            ->field('preset_id,preset_mark_id,preset_name')
+            ->group('preset_mark_id')
+            ->order('preset_mark_id desc')
+            ->select();
         }
         // dump($assign_data);die;
         $this->assign($assign_data);
@@ -564,6 +570,8 @@ class Product extends Base
         $shopConfig = getUsersConfigData('shop');
         $assign_data['shopConfig'] = $shopConfig;
 
+        // dump($assign_data);die;
+
         // 处理产品价格属性
         $IsSame = '';
         if (empty($shopConfig['shop_type']) || 1 == $shopConfig['shop_type']) {
@@ -696,7 +704,7 @@ class Product extends Base
             'is_del'        => 0,
         );
         $arctype_max_level = intval(config('global.arctype_max_level'));
-        $select_html = $arctypeLogic->arctype_list(0, $selected, true, $arctype_max_level, $map);
+        $select_html = $arctypeLogic->arctype_list(0, $selected, true,0, $arctype_max_level, $map,$this->store_id);
         $this->assign('select_html',$select_html);
         /*--end*/
 

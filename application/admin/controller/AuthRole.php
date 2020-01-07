@@ -109,7 +109,9 @@ class AuthRole extends Base {
 
         // 栏目
         $arctype_data = $arctype_array = array();
-        $arctype = M('arctype')->select();
+        $arctype = M('arctype')->where('store_id',$this->store_id)
+        ->where('lang','cn')
+        ->select();
         if(! empty($arctype)){
             foreach ($arctype as $item){
                 if($item['parent_id'] <= 0){
@@ -193,7 +195,9 @@ class AuthRole extends Base {
 
         // 栏目
         $arctype_data = $arctype_array = array();
-        $arctype = M('arctype')->select();
+        $arctype = M('arctype')->where('store_id',$this->store_id)
+        ->where('lang','cn')
+        ->select();
         if(! empty($arctype)){
             foreach ($arctype as $item){
                 if($item['parent_id'] <= 0){

@@ -395,7 +395,7 @@ class Arctype extends Base
             $selected = $info['parent_id'];
             $arctype_max_level = intval(config('global.arctype_max_level'));
             $arctypeWhere = ['is_del'=>0];
-            $options = $this->arctypeLogic->arctype_list(0, $selected, false, $arctype_max_level - 1, $arctypeWhere);
+            $options = $this->arctypeLogic->arctype_list(0, $selected, false,0, $arctype_max_level - 1, $arctypeWhere,$this->store_id);
             foreach ($options AS $var)
             {
                 $select_html .= '<option value="' . $var['id'] . '" data-grade="' . $var['grade'] . '" data-dirpath="'.$var['dirpath'].'"';

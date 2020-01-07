@@ -51,11 +51,9 @@ class Cart extends Common {
         }
         //增加到购物车
         $bool = $this->cart->add_cart($data);
-        if($bool){
-            return return_ajax(1,'success');
-        }else{
-            return return_ajax(2,'添加失败');
-        }
+   
+        return return_ajax($bool['code'],$bool['msg']);
+        
     }
 //购物车商品数量增加减少
     public function edit_num()
@@ -101,8 +99,6 @@ class Cart extends Common {
         }else{
             return return_ajax(2,'清空失败');
         }
-
-
     }
 
 //显示购物车商品的数量

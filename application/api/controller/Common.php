@@ -18,7 +18,8 @@ use think\Controller;
 
 class Common extends controller {
 
-    public $table_id;
+    public $table_id;//桌号
+    public $store_id;//店铺ID
 
     /**
      * 析构函数
@@ -26,6 +27,8 @@ class Common extends controller {
     function __construct() 
     {
         $this->table_id = input('table_id');
+        $store_id = Db::name('table')->where('id',$this->table_id)->limit(1)->value('store_id');
+        $this->store_id = $store_id;
         
     }
      public function _initialize() 

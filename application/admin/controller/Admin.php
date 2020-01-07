@@ -43,7 +43,10 @@ class Admin extends Base {
             }
         }
         /*--end*/
-
+        if(session('admin_info')['admin_id'] != 1){
+           $condition['a.store_id'] = $this->store_id; 
+        }
+        
         /**
          * 数据查询
          */
@@ -363,56 +366,63 @@ class Admin extends Base {
             $data['role_id'] = intval($data['role_id']);
             $data['parent_id'] = session('admin_info.admin_id');
             $data['add_time'] = getTime();
+            $data['store_id'] = $this->store_id;
             if (empty($data['pen_name'])) {
                 $data['pen_name'] = $data['user_name'];
             }
+
             if (M('admin')->where("user_name", $data['user_name'])->count()) {
                 $this->error("此用户名已被注册，请更换",url('Admin/admin_add'));
             } else {
                 $admin_id = M('admin')->insertGetId($data);
                 if ($admin_id) {
                     adminLog('新增管理员：'.$data['user_name']);
+                    $data = '';
+
+                    if(session('admin_info.admin_id') ==1){
+                        $store_id = $admin_id;
+                       $data = Db::name('admin')->where('admin_id',$admin_id)->update(['store_id'=>$admin_id]);
+                        $data = Db::name('config')->where('inc_type','web')->where('store_id',1)->where('is_del',0)->select();
+                        foreach ($data as $k => $v) {
+                            unset($data[$k]['id']);
+                            unset($data[$k]['update_time']);
+                            $data[$k]['store_id'] = $admin_id;
+                        }
+                        Db::name('config')->insertAll($data);
+                    }else{
+                        $store_id = $this->store_id;
+                    }
 
                     /*同步追加一个后台管理员到会员用户表*/
-                    try {
-                        $usersInfo = Db::name('users')->field('users_id')->where([
-                                'username'  => $data['user_name'],
-                                'lang'      => $this->admin_lang,
-                            ])->find();
-                        if (!empty($usersInfo)) {
-                            $r = Db::name('users')->where(['users_id'=>$usersInfo['users_id']])->update([
-                                    'nickname'      => $data['user_name'],
-                                    'admin_id'      => $admin_id,
-                                    'is_activation' => 1,
-                                    'is_lock'       => 0,
-                                    'is_del'        => 0,
-                                    'update_time'   => getTime(),
-                                ]);
-                            !empty($r) && $users_id = $usersInfo['users_id'];
-                        } else {
-                            // 获取要添加的用户名
-                            $username = $this->GetUserName($data['user_name']);
-                            $AddData = [
-                                'username' => $username,
-                                'nickname' => $username,
-                                'password' => func_encrypt(getTime()),
-                                'level'    => 1,
-                                'lang'     => $this->admin_lang,
-                                'reg_time' => getTime(),
-                                'add_time' => getTime(),
-                                'head_pic' => ROOT_DIR . '/public/static/common/images/dfboy.png',
-                                'register_place' => 1,
-                                'admin_id' => $admin_id,
-                            ];
-                            $users_id = Db::name('users')->insertGetId($AddData);
-                        }
-                        if (!empty($users_id)) {
-                            Db::name('admin')->where(['admin_id'=>$admin_id])->update([
-                                    'syn_users_id'  => $users_id,
-                                    'update_time'   => getTime(),
-                                ]);
-                        }
-                    } catch (\Exception $e) {}
+                    // try {
+
+                    //         // 获取要添加的用户名
+                    //         $username = $this->GetUserName($data['user_name']);
+
+                    //         $AddData = [
+                    //             'store_id' => $store_id,
+                    //             'username' => $username,
+                    //             'nickname' => $username,
+                    //             'password' => func_encrypt(getTime()),
+                    //             'level'    => 1,
+                    //             'lang'     => $this->admin_lang,
+                    //             'reg_time' => getTime(),
+                    //             'add_time' => getTime(),
+                    //             'head_pic' => ROOT_DIR . '/public/static/common/images/dfboy.png',
+                    //             'register_place' => 1,
+                    //             'admin_id' => $admin_id,
+                    //         ];
+               
+                    //         $users_id = Db::name('users')->insertGetId($AddData);
+
+
+                    //     if (!empty($users_id)) {
+                    //         Db::name('admin')->where(['admin_id'=>$admin_id])->update([
+                    //                 'syn_users_id'  => $users_id,
+                    //                 'update_time'   => getTime(),
+                    //             ]);
+                    //     }
+                    // } catch (\Exception $e) {}
                     /* END */
 
                     $this->success("操作成功", url('Admin/index'));
@@ -437,7 +447,10 @@ class Admin extends Base {
 
         // 栏目
         $arctype_data = $arctype_array = array();
-        $arctype = M('arctype')->select();
+        $arctype = M('arctype')
+        ->where('store_id',$this->store_id)
+        ->where('lang','cn')
+        ->select();
         if(! empty($arctype)){
             foreach ($arctype as $item){
                 if($item['parent_id'] <= 0){
@@ -551,7 +564,10 @@ class Admin extends Base {
 
         // 栏目
         $arctype_data = $arctype_array = array();
-        $arctype = M('arctype')->select();
+         $arctype = M('arctype')
+        ->where('store_id',$this->store_id)
+        ->where('lang','cn')
+        ->select();
         if(! empty($arctype)){
             foreach ($arctype as $item){
                 if($item['parent_id'] <= 0){

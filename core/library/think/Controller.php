@@ -520,9 +520,11 @@ class Controller
      */
     protected function fetch($template = '', $vars = [], $replace = [], $config = [])
     {
+
         $html = $this->view->fetch($template, $vars, $replace, $config);
         // \think\Coding::checkcr();
         /*尝试写入静态缓存*/
+
         $param = $this->request->param();
         if (isset($param['clear']) || false === config('app_debug')) {
             write_html_cache($html);

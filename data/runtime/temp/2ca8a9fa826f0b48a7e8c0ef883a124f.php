@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1577954481;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1578291304;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -174,9 +174,9 @@
                             </td>
                             <td class="" style="width: 100%;">
                                 <div class="tl" style="padding-left: 10px;">
-                                    <!-- <a href="<?php echo url('Shop/order_details',array('id'=>$vo['id'])); ?>"> -->
+                                    <a href="<?php echo url('Table/edit',array('id'=>$vo['id'])); ?>">
                                         <?php echo $vo['name']; ?>
-                                    <!-- </a> -->
+                                    </a>
                                 </div>
                             </td>
                             <td class="">

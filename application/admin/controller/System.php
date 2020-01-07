@@ -106,8 +106,8 @@ class System extends Base
 
 
             // die;
-            //tpCache($inc_type, $param);
-            //write_global_params($this->admin_lang); // 写入全局内置参数
+            // tpCache($inc_type, $param);
+            // write_global_params($this->admin_lang); // 写入全局内置参数
             $this->success('操作成功', url('System/web'));
             exit;
         }

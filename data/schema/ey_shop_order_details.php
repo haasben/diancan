@@ -72,6 +72,25 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
+  'special_price' => 
+  array (
+    'name' => 'special_price',
+    'type' => 'decimal(10,2)',
+    'notnull' => false,
+    'default' => '0.00',
+    'primary' => false,
+    'autoinc' => false,
+  ),
+  'is_add_dish' => 
+  array (
+    'name' => 'is_add_dish',
+    'type' => 'tinyint(3) unsigned',
+    'notnull' => false,
+    'default' => '0',
+    'primary' => false,
+    'autoinc' => false,
+  ),
+
   'prom_type' => 
   array (
     'name' => 'prom_type',
@@ -117,4 +136,5 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
+
 );

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/template/arctype\index.htm";i:1577693052;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/template/arctype\index.htm";i:1578391964;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -183,9 +183,9 @@
                       <a href="<?php echo url('Arctype/edit',array('id'=>$vo['id'])); ?>" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
 
                       <?php if(is_check_access('Arctype@add') == '1'): if($main_lang == $admin_lang && empty($vo['weapp_code'])): if($vo['grade'] < ($arctype_max_level - 1)): ?>           
-                            <a href="<?php echo url('Arctype/add',array('parent_id'=>$vo['id'])); ?>" class="btn blue"><i class="fa fa-pencil-square-o"></i>增加子栏目</a>
+                           <!--  <a href="<?php echo url('Arctype/add',array('parent_id'=>$vo['id'])); ?>" class="btn blue"><i class="fa fa-pencil-square-o"></i>增加子栏目</a> -->
                           <?php else: ?>
-                            <a class="btn blue" title="不支持增加四级栏目"><i class="fa fa-pencil-square-o"></i>不支持增加</a>
+         <!--                    <a class="btn blue" title="不支持增加四级栏目"><i class="fa fa-pencil-square-o"></i>不支持增加</a> -->
                           <?php endif; endif; endif; if(is_check_access('Arctype@pseudo_del') == '1'): if($main_lang == $admin_lang): ?>
                         <a class="btn red"  href="javascript:void(0);" data-url="<?php echo url('Arctype/pseudo_del'); ?>" data-id="<?php echo $vo['id']; ?>" data-typename="<?php echo $vo['typename']; ?>" data-deltype="pseudo" onClick="delfun(this);"><i class="fa fa-trash-o"></i>删除</a>
                         <?php endif; endif; ?>

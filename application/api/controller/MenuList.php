@@ -31,7 +31,7 @@ class MenuList extends Common {
     public function index(){
 
         //菜单列表
-        $menu['cate'] = $this->arctypeModel->get_cate_data();
+        $menu['cate'] = $this->arctypeModel->get_cate_data($this->store_id);
         
         $menu['child_data'] = array();
         //获取菜单的第一个栏目
@@ -65,7 +65,11 @@ class MenuList extends Common {
  	public function shop_info(){
  		$aid = input('aid');
  		$data = $this->archivesModel->shop_info($aid);
+        $cartModel = Model('Cart');
+        $data['cart_num'] = $cartModel->one_product_sum($this->table_id,$aid);
         $data['img'] = $this->archivesModel->archives_img_arr($aid); 
+
+
  		return return_ajax(1,'success',$data);
  	}   
 

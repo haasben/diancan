@@ -160,9 +160,9 @@
                       {eq name="'Arctype@add'|is_check_access" value="1"}
                         {if condition="$main_lang == $admin_lang && empty($vo['weapp_code'])"}
                           {if condition="$vo['grade'] < ($arctype_max_level - 1)"}           
-                            <a href="{:url('Arctype/add',array('parent_id'=>$vo['id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>增加子栏目</a>
+                           <!--  <a href="{:url('Arctype/add',array('parent_id'=>$vo['id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>增加子栏目</a> -->
                           {else /}
-                            <a class="btn blue" title="不支持增加四级栏目"><i class="fa fa-pencil-square-o"></i>不支持增加</a>
+         <!--                    <a class="btn blue" title="不支持增加四级栏目"><i class="fa fa-pencil-square-o"></i>不支持增加</a> -->
                           {/if}
                         {/if}
                       {/eq}

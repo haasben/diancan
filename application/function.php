@@ -26,6 +26,25 @@ function return_ajax($code,$msg="",$data=[]){
     return json($return_data,JSON_UNESCAPED_UNICODE);
 }   
 
+function raw_post($url, $data_string) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'X-AjaxPro-Method:ShowList',
+        'User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36')
+    );
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // 不从证书中检查SSL加密算法是否存在
+    $data = curl_exec($ch);
+
+    curl_close($ch);
+    return $data;
+}
+
 function create_code($web_url,$logo){
 
     $date = date('Ymd');
@@ -34,11 +53,14 @@ function create_code($web_url,$logo){
         if (mkdir($dir, 0777, true)) {
         }
     }
+
+
+
     $file_name = $date.'/'.md5(mt_rand(100,12542).time()).'.png';
 
     $qrCode = new QrCode($web_url);
     $qrCode->setSize(300);
-
+  
     // Set advanced options
     $qrCode->setWriterByName('png');
     $qrCode->setMargin(10);
@@ -51,8 +73,10 @@ function create_code($web_url,$logo){
     $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
 
     // $qrCode->setLabel('Scan the code', 16, __DIR__.'/../assets/fonts/noto_sans.otf', LabelAlignment::CENTER());
- 
-    $qrCode->setLogoPath(ROOT_PATH.$logo);
+    if(!empty($logo)){
+        $qrCode->setLogoPath(ROOT_PATH.$logo);
+    }
+    
 
 
     $qrCode->setLogoSize(100, 100);

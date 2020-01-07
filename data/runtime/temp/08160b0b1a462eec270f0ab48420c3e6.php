@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:49:"./application/admin/template/admin\admin_edit.htm";i:1573115082;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:61:"D:\WWW\diancan\application\admin\template\admin\admin_bar.htm";i:1573115082;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:49:"./application/admin/template/admin\admin_edit.htm";i:1578290934;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:61:"D:\WWW\diancan\application\admin\template\admin\admin_bar.htm";i:1573115082;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -132,7 +132,9 @@
                     <p class="notic"></p>
                 </dd>
             </dl>
+
             <?php if($info['admin_id'] != \think\Session::get('admin_info.admin_id') AND 0 >= \think\Session::get('admin_info.role_id')): ?>
+
             <dl class="row"><dt class="tit"><label><b>管理员权限设置</b></label></dt></dl>
             <dl class="row">
                 <dt class="tit">
@@ -160,16 +162,7 @@
                     <p class="notic"></p>
                 </dd>
             </dl> -->
-            <dl class="row">
-                <dt class="tit">
-                    <label for="name">在线升级</label>
-                </dt>
-                <dd class="opt">
-                    <label><img class="cboximg" src="/public/static/admin/images/<?php if($role_info['online_update'] == '1'): ?>ok<?php else: ?>del<?php endif; ?>.png" /><input type="checkbox" name="online_update" value="1" <?php if($role_info['online_update'] == '1'): ?> checked="checked"<?php endif; ?> class="none" />允许操作</label>
-                    <span class="err"></span>
-                    <p class="notic"></p>
-                </dd>
-            </dl>
+
             <dl class="row">
                 <dt class="tit">
                     <label for="name">文档权限</label>

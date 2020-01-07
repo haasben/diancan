@@ -16,6 +16,47 @@ error_reporting(0);
 
 include_once EXTEND_PATH."function.php";
 
+    // 获取微信公众号access_token
+    // 传入微信公众号appid
+    // 传入微信公众号secret
+    // 返回data
+function GetWeChatMiniAccessToken($appid,$secret){
+        // 获取公众号access_token，接口限制10万次/天
+        $access_token = cache('GetWeChatMiniAccessToken');
+        if(empty($access_token)){
+            $time = getTime();
+            $get_token_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
+            $TokenData = httpRequest($get_token_url);
+            $TokenData = json_decode($TokenData, true);
+            // dump($TokenData);
+            if (!empty($TokenData['access_token'])) {
+                // 存入缓存配置
+                $WechatData  = [
+                    'wechat_token_value' => $TokenData['access_token'],
+                    'wechat_token_time'  => $time,
+                ];
+                cache('GetWeChatMiniAccessToken',$WechatData,7150);
+                // getUsersConfigData('wechat',$WechatData);
+                $data = [
+                    'status' => true,
+                    'token'  => $WechatData['wechat_token_value'],
+                ];
+            }else{
+                $data = [
+                    'status' => false,
+                    'token' => $TokenData['errmsg'],
+                ];
+            }
+        }else{
+            $data = [
+                'status' => true,
+                'token'  => $access_token['wechat_token_value'],
+            ];
+        }
+        
+        return $data;
+    }
+
 // 应用公共文件
 
 if (!function_exists('switch_exception')) 
@@ -1207,7 +1248,7 @@ if (!function_exists('allow_release_arctype'))
         }
 
         $cacheKey = json_encode($selected).json_encode($allow_release_channel).$selectform.json_encode($where);
-        $select_html = cache($cacheKey);
+        $select_html = cache($cacheKey.$admin_info['store_id']);
         if (empty($select_html) || false == $selectform) {
             /*允许发布文档的模型*/
             $allow_release_channel = !empty($allow_release_channel) ? $allow_release_channel : config('global.allow_release_channel');
@@ -1221,6 +1262,7 @@ if (!function_exists('allow_release_arctype'))
                 ->alias('c')
                 ->join('__ARCTYPE__ s','s.parent_id = c.id','LEFT')
                 ->where($where)
+                ->where('c.store_id',$admin_info['store_id'])
                 ->group('c.id')
                 ->order('c.parent_id asc, c.sort_order asc, c.id')
                 ->cache(true,EYOUCMS_CACHE_TIME,"arctype")

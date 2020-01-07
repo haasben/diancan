@@ -9,6 +9,15 @@ return array (
     'primary' => true,
     'autoinc' => true,
   ),
+  'store_id' => 
+  array (
+    'name' => 'store_id',
+    'type' => 'int(11) unsigned',
+    'notnull' => false,
+    'default' => NULL,
+    'primary' => true,
+    'autoinc' => true,
+  ),
   'preset_mark_id' => 
   array (
     'name' => 'preset_mark_id',

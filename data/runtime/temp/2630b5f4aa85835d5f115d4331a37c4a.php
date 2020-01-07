@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:49:"./application/admin/template/uploadify\upload.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:49:"./application/admin/template/uploadify\upload.htm";i:1578382869;}*/ ?>
 <html lang="zh-cn">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -15,7 +15,7 @@
 <div class="upload-box" style="height: 90%;">
     <ul class="tabs">
         <li class="checked" id="upload_tab">本地上传</li>
-        <a href="javascript:void(0);" onclick="picture_folder(this);" data-url="<?php echo url('Uploadify/picture_folder',['num'=>$info['num'],'input'=>$info['input'],'path'=>$info['path'],'func'=>$info['func']]); ?>"><li>在线管理</li></a>
+ <!--        <a href="javascript:void(0);" onclick="picture_folder(this);" data-url="<?php echo url('Uploadify/picture_folder',['num'=>$info['num'],'input'=>$info['input'],'path'=>$info['path'],'func'=>$info['func']]); ?>"><li>在线管理</li></a> -->
         <!-- <li id="search_tab">文件搜索</li> -->
     </ul>
     <div class="container">

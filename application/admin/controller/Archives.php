@@ -462,6 +462,7 @@ class Archives extends Base
     public function release()
     {
         $typeid = input('param.typeid/d', 0);
+
         if (0 < $typeid) {
             $param = input('param.');
             $row = Db::name('arctype')
@@ -469,6 +470,7 @@ class Archives extends Base
                 ->alias('a')
                 ->join('__CHANNELTYPE__ b', 'a.current_channel = b.id', 'LEFT')
                 ->where('a.id', 'eq', $typeid)
+                ->where('a.store_id',$this->store_id)
                 ->find();
             /*针对不支持发布文档的模型*/
             if (!in_array($row['id'], $this->allowReleaseChannel)) {
@@ -487,6 +489,7 @@ class Archives extends Base
 
         /*允许发布文档列表的栏目*/
         $select_html = allow_release_arctype();
+        // dump($select_html);die;
         $this->assign('select_html',$select_html);
         /*--end*/
 

@@ -62,7 +62,7 @@ class Bind extends Controller
         if(request()->isAjax()){
 
             Gateway::$registerAddress = '127.0.0.1:1238';
-            $room_id = 10;
+            $room_id = 1;
             $msg = date('Y-m-d H:i:s',time());
 
             $message = ['type'=>'new_order','msg'=>$msg];

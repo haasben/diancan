@@ -294,6 +294,7 @@ class Shop extends Model
     {   
         $SpecUpData = []; // 有规格
         $ArcUpData  = []; // 无规格
+
         foreach ($SpecValue as $key => $value) {
             if (!empty($value['value_id'])) {
                 $SpecUpData[] = [
@@ -302,19 +303,22 @@ class Shop extends Model
                     'spec_sales_num' => Db::raw('spec_sales_num+'.($value['quantity'])),
                 ];
             }else{
-                $ArcUpData[] = [
-                    'aid'         => $value['aid'],
-                    'stock_count' => Db::raw('stock_count-'.($value['quantity'])),
-                ];
+
+                Db::name('archives')->where('aid',$value['aid'])->setDec('stock_count',$value['quantity']);
+                // $ArcUpData[] = [
+                //     'aid'         => $value['aid'],
+                //     'stock_count' => Db::raw('stock_count-'.($value['quantity'])),
+                // ];
             }
         }
 
         if (!empty($SpecUpData)) {
             model('ProductSpecValue')->saveAll($SpecUpData);
         }
+        // dump($ArcUpData);
+        // if (!empty($ArcUpData)) {
 
-        if (!empty($ArcUpData)) {
-            model('Archives')->saveAll($ArcUpData);
-        }
+        //     Model('Archives')->saveAll($ArcUpData);
+        // }
     }
 }

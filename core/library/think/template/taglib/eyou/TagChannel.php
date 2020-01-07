@@ -323,7 +323,7 @@ class TagChannel extends Base
             'status'    => 1,
         );
         !empty($notypeid) && $map['id'] = ['NOTIN', $notypeid]; // 排除指定栏目ID
-        $res = $arctypeLogic->arctype_list(0, 0, false, $arctype_max_level, $map);
+        $res = $arctypeLogic->arctype_list(0, 0, false,0, $map, $arctype_max_level,1);
         /*--end*/
 
         if (count($res) > 0) {

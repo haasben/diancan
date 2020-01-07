@@ -163,9 +163,11 @@ class Shop extends Base {
         $order_id = input('param.order_id');
         if (!empty($order_id)) {
             // 查询订单信息
+
             $this->GetOrderData($order_id);
             // 查询订单操作记录
             $Action = $this->shop_order_log_db->where('order_id',$order_id)->order('action_id desc')->select();
+            // dump($Action);die;
             // 操作记录数据处理
             foreach ($Action as $key => $value) {
                 if ('0' == $value['action_user']) {
@@ -430,18 +432,32 @@ class Shop extends Base {
 
                     // 如果是关闭订单操作则执行还原产品库存
                     if ('gbdd' == $post['status_name']) {
-                        $UpWhere = $this->shop_order_details_db->where('order_id',$post['order_id'])->field('product_id as aid,num,data')->find();
+
+                        $UpWhere = $this->shop_order_details_db->where('order_id',$post['order_id'])->field('product_id as aid,num,data')->select();
+                        $update = array();
+                        foreach ($UpWhere as $k => $v) {
+                            $update['spec_value_id'] = unserialize($v['data'])['spec_value_id'];
+
+                            // dump($UpWhere['num']);
+                            // dump($UpWhere['data']);
+                            // dump($UpWhere['spec_value_id']);die;
+                            // 清除多余num数据
+                            Db::name('archives')->where('aid',$v['aid'])->setInc('stock_count',$v['num']);
+                            if(!empty($update['spec_value_id'])){
+                                $UpData['spec_stock']     = Db::raw('spec_stock+'.($v['num']));
+                                $UpData['spec_sales_num'] = Db::raw('spec_sales_num-'.($v['num']));
+                                unset($v['num']); 
+                                // 清除多余data数据
+                                unset($v['data']);
+                                $v['spec_value_id'] = $update['spec_value_id'];
+                               // 更新库存及销量
+                                Db::name('product_spec_value')->where($v)->update($UpData); 
+                            }
+                        }
+
+
+                       // $UpWhere = $this->shop_order_details_db->where('order_id',$post['order_id'])->field('product_id as aid,num,data')->find();
                         // 读取规格值ID，拼装作为更新条件
-                        $UpWhere['spec_value_id'] = unserialize($UpWhere['data'])['spec_value_id'];
-                        // 更新数据
-                        $UpData['spec_stock']     = Db::raw('spec_stock+'.($UpWhere['num']));
-                        $UpData['spec_sales_num'] = Db::raw('spec_sales_num-'.($UpWhere['num']));
-                        // 清除多余num数据
-                        unset($UpWhere['num']); 
-                        // 清除多余data数据
-                        unset($UpWhere['data']);
-                        // 更新库存及销量
-                        Db::name('product_spec_value')->where($UpWhere)->update($UpData);
                     }
 
                     // 添加订单操作记录
@@ -545,10 +561,13 @@ class Shop extends Base {
     function GetOrderData($order_id)
     {
         // 获取订单数据
-        $OrderData = $this->shop_order_db->find($order_id);
-
+        // dump($order_id);
+        // $OrderData = $this->shop_order_db->find($order_id);
+        $OrderData = Db::name('shop_order')->where('order_id',$order_id)->find();
+        // dump($OrderData);die;
         // 获取会员数据
         $UsersData = $this->users_db->find($OrderData['users_id']);
+
         // 当前单条订单信息的会员ID，存入session，用于添加订单操作表
         session('OrderUsersId',$OrderData['users_id']);
 
@@ -655,6 +674,7 @@ class Shop extends Base {
                     $post_new[$key][$kk]['lang']           = $this->admin_lang;
                     $post_new[$key][$kk]['add_time']       = $time;
                     $post_new[$key][$kk]['update_time']    = $time;
+                    $post_new[$key][$kk]['store_id']       = $this->store_id;
                 }
             }
             // 三维数组降为二维数组
@@ -701,7 +721,11 @@ class Shop extends Base {
         }
 
         // 查询规格数据
-        $PresetData = $this->product_spec_preset_db->where('lang',$this->admin_lang)->order('sort_order asc, preset_id asc')->select();
+        $PresetData = $this->product_spec_preset_db
+            ->where('store_id',$this->store_id)
+            ->where('lang',$this->admin_lang)
+            ->order('sort_order asc, preset_id asc')
+            ->select();
         // 数组转化
         $ResultData = $this->ProductSpecLogic->GetPresetData($PresetData);
         // 获取预设规格中最大的标记MarkId

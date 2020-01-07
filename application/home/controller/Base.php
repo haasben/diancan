@@ -27,7 +27,7 @@ class Base extends Common {
      */
     public function _initialize() {
         parent::_initialize();
-
+       
         $this->fieldLogic = new FieldLogic();
         
         // 设置URL模式
