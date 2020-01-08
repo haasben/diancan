@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578386704;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578471573;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 <!-- Apple devices fullscreen -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <!-- Apple devices fullscreen -->
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" media="screen"/>
 <title><?php echo (isset($global['web_name']) && ($global['web_name'] !== '')?$global['web_name']:''); if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): ?>管理系统<?php endif; ?></title>
@@ -227,9 +228,6 @@ preload="preload" muted="muted" >
                 alert(data.msg);
                 break;
 
-
-
-                
             default :
                 console.log(e.data);
         }

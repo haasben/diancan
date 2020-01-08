@@ -28,7 +28,7 @@ function GetWeChatMiniAccessToken($appid,$secret){
             $get_token_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
             $TokenData = httpRequest($get_token_url);
             $TokenData = json_decode($TokenData, true);
-            // dump($TokenData);
+          
             if (!empty($TokenData['access_token'])) {
                 // 存入缓存配置
                 $WechatData  = [
@@ -53,7 +53,6 @@ function GetWeChatMiniAccessToken($appid,$secret){
                 'token'  => $access_token['wechat_token_value'],
             ];
         }
-        
         return $data;
     }
 

@@ -90,7 +90,15 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
-
+  'is_del' => 
+  array (
+    'name' => 'is_del',
+    'type' => 'tinyint(3) unsigned',
+    'notnull' => false,
+    'default' => '0',
+    'primary' => false,
+    'autoinc' => false,
+  ),
   'prom_type' => 
   array (
     'name' => 'prom_type',
@@ -100,6 +108,7 @@ return array (
     'primary' => false,
     'autoinc' => false,
   ),
+  
   'litpic' => 
   array (
     'name' => 'litpic',

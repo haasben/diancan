@@ -33,9 +33,10 @@ class Base extends Controller {
         header("Cache-control: private");  // history.back返回后输入框值丢失问题
         parent::__construct();
 
-        $this->global_assign();
+        
 
         $this->store_id = session('admin_info')['store_id'];
+        $this->global_assign();
         /*---------*/
         $is_eyou_authortoken = session('web_is_authortoken');
 
@@ -146,7 +147,24 @@ class Base extends Controller {
      */
     public function global_assign()
     {
-        $this->assign('global', tpCache('global'));
+
+        $global = cache('global');
+        if(empty($global)){
+            // $global
+            $globals = Db::name('config')
+            ->where('store_id',$this->store_id)
+            ->where('lang','cn')
+            ->select();
+
+            $global = array();
+            foreach ($globals as $k => $v) {
+                $global[$v['name']] = $v['value'];
+            }
+            cache('global',$global);
+        }
+        
+        // dump($global);
+        $this->assign('global', $global);
     } 
     
     /**

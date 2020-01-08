@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1578291304;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:44:"./application/admin/template/table\index.htm";i:1578453405;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -145,6 +145,11 @@
                         <th abbr="article_time" axis="col6" class="w100">
                             <div class="tc">桌位数</div>
                         </th>
+
+                        <th abbr="article_time" axis="col6" class="w100">
+                            <div class="tc">状态</div>
+                        </th>
+
                         <th abbr="article_time" axis="col6" class="w100">
                             <div class="tc">启用</div>
                         </th>
@@ -184,13 +189,23 @@
                                     <?php echo $vo['num_seats']; ?>
                                 </div>
                             </td>
-                            
+                            <td class="">
+                                <div class="w100 tc">
+                                    <?php if($vo['is_seat'] == 1): ?>
+                                        <span class="yes" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableValStatus('table','id','<?php echo $vo['id']; ?>','is_seat',this);"<?php endif; ?> ><i class="fa fa-check-circle"></i>已上座</span>
+                                    <?php else: ?>
+                                        <span class="no" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableValStatus('table','id','<?php echo $vo['id']; ?>','is_seat',this);"<?php endif; ?> ><i class="fa fa-ban"></i>空闲中</span>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+
+
                             <td class="">
                                 <div class="w100 tc">
                                     <?php if($vo['status'] == 1): ?>
-                                        <span class="yes" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableVal('ad_position','id','<?php echo $vo['id']; ?>','status',this);"<?php endif; ?> ><i class="fa fa-check-circle"></i>是</span>
+                                        <span class="yes" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableVal('table','id','<?php echo $vo['id']; ?>','status',this);"<?php endif; ?> ><i class="fa fa-check-circle"></i>是</span>
                                     <?php else: ?>
-                                        <span class="no" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableVal('ad_position','id','<?php echo $vo['id']; ?>','status',this);"<?php endif; ?> ><i class="fa fa-ban"></i>否</span>
+                                        <span class="no" <?php if(is_check_access(CONTROLLER_NAME.'@edit') == '1'): ?>onClick="changeTableVal('table','id','<?php echo $vo['id']; ?>','status',this);"<?php endif; ?> ><i class="fa fa-ban"></i>否</span>
                                     <?php endif; ?>
                                 </div>
                             </td>

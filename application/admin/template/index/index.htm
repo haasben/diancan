@@ -8,6 +8,7 @@
 <!-- Apple devices fullscreen -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <!-- Apple devices fullscreen -->
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="shortcut icon" type="image/x-icon" href="__ROOT_DIR__/favicon.ico" media="screen"/>
 <title>{$global.web_name|default=''}{notempty name="$is_eyou_authortoken"}管理系统{/notempty}</title>
@@ -183,9 +184,6 @@ preload="preload" muted="muted" >
                 alert(data.msg);
                 break;
 
-
-
-                
             default :
                 console.log(e.data);
         }

@@ -104,7 +104,7 @@ class System extends Base
             }
 
 
-
+            cache('global',null);
             // die;
             // tpCache($inc_type, $param);
             // write_global_params($this->admin_lang); // 写入全局内置参数

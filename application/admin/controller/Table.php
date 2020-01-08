@@ -129,6 +129,7 @@ class Table extends Base {
             ->where('inc_type','pay')
             ->limit(1)
             ->value('value');
+
             if(empty($pay_wechat_config)){
 
                 $this->error('请先配置小程序信息');
@@ -169,15 +170,11 @@ class Table extends Base {
                     }
                 }
                 $file_name = md5(mt_rand(100,12542).time()).'.png';
-
                 $url = file_put_contents($dir.DS.$file_name,$wx_code);
                 $url = '/uploads/qrcode/'.$date.'/'.$file_name;
-
-
 	            // $url = create_code($pngurl,$web_logo);
 
 				M('table')->where('id',$id)->update(['code_url'=>$url]);
-
 				$this->success("操作成功", url('Table/index'));
 			}else{
 				$this->error("操作失败", url('Table/index'));

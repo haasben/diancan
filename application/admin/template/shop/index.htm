@@ -62,7 +62,7 @@
                         <th abbr="article_time" axis="col6" class="w160">
                             <div class="tc">支付时间</div>
                         </th>
-                        <th axis="col1" class="w160">
+                        <th axis="col1" class="w280">
                             <div class="tc">操作</div>
                         </th>
                     </tr>
@@ -136,7 +136,7 @@
                             </td>
                             
                             <td>
-                                <div class="w160 tc">
+                                <div class="w280 tc">
                                     <a href="{:url('Shop/order_details',array('order_id'=>$vo['order_id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>详情</a>
                                     {eq name="$vo.order_status" value='0'}
                                         <!-- 订单未付款时出现 -->
@@ -157,9 +157,9 @@
                             <!--                 <i class="fa fa-pencil-square-o"></i>发货 -->
                                        <!--  </a> -->
 
-                                        <a href="JavaScript:void(0);" onclick="OrderMark('gbdd','{$vo.order_id}','{$vo.users_id}');" class="btn blue">
+                                   <!--      <a href="JavaScript:void(0);" onclick="OrderMark('gbdd','{$vo.order_id}','{$vo.users_id}');" class="btn blue">
                                             <i class="fa fa-pencil-square-o"></i>关闭
-                                        </a>
+                                        </a> -->
                                     {/eq}
 
                                     {eq name="$vo.order_status" value='2'}
@@ -184,6 +184,13 @@
                                             <i class="fa fa-pencil-square-o"></i>删除
                                         </a>
                                     {/if}
+
+                                    {if condition="$vo.order_status == 1"}
+                                     <a href="JavaScript:void(0);" url="{:url('Shop/print_order',array('order_id'=>$vo['order_id']))}" class="print_order btn blue">
+                                            <i class="fa fa-pencil-square-o"></i>打印订单
+                                        </a>
+                                    {/if}
+                                    
                                 </div>
                             </td>
                         </tr>
@@ -215,6 +222,21 @@
 </div>
 <script>
     $(document).ready(function(){
+
+        $('.print_order').click(function(){
+            var url = $(this).attr('url');
+            layer.open({
+              type: 2,
+              title: '订单详情',
+              shadeClose: true,
+              shade: false,
+              maxmin: true, //开启最大化最小化按钮
+              area: ['400px', '600px'],
+              content: url
+            });
+            })
+
+
         // 表格行点击选中切换
         $('#flexigrid > table>tbody >tr').click(function(){
             $(this).toggleClass('trSelected');

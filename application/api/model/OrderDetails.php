@@ -15,6 +15,7 @@ class OrderDetails extends Model
 
 		$data = self::field('product_name,num,data,product_price,special_price,litpic,is_add_dish')
 			->where('order_id',$order_id)
+			->where('is_del',0)
 			->select();
 		foreach ($data as $k => $v) {
 			// dump($v['data']);
@@ -29,7 +30,6 @@ class OrderDetails extends Model
 	            		$spec_value_attr .= explode('：', $value)[1].'_';
 	            	}
 	            }
-	            
 	            $data[$k]['data'] = trim($spec_value_attr,'_');
 			}
 			

@@ -232,6 +232,7 @@ function changeTableVal(table,id_name,id_value,field,obj)
     }); 
 }
 
+
 /**
  * 输入为空检查
  * @param name '#id' '.id'  (name模式直接写名称)

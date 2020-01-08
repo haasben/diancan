@@ -1142,4 +1142,91 @@ class Shop extends Base {
             $this->error($msg);
         }
     }
+
+    public function remove_dishes(){
+
+        $details_id = input('details_id');
+
+        $shop_order_detailsModel = Db::name('shop_order_details');
+        $shop_orderModel = Db::name('shop_order');
+
+
+        //查询到该条商品订单的详情
+        $order_details = $shop_order_detailsModel
+            ->where('details_id',$details_id)
+            ->limit(1)
+            ->find();
+        $order_id = $order_details['order_id'];
+        //查询当前订单的状态
+        $order_status = $shop_orderModel
+            ->where('order_id',$order_id)
+            ->limit(1)
+            ->find();
+        if($order_status['order_status'] !=0){
+            return ['code'=>2,'msg'=>'只可修改正在进行中的订单'];exit;
+        }
+
+        Db::startTrans();
+        $num = $order_details['num'];
+        $bool3 = 1;
+        if($order_status['order_total_amount'] == ($order_details['special_price']*$num)){
+            $bool3 = $shop_orderModel->where('order_id',$order_id)
+                ->update(['order_status'=>-1]);
+        }
+        //修改当条的状态为移除
+        //订单总价减少相对应的金额
+        $bool = $shop_order_detailsModel
+            ->where('details_id',$details_id)
+            ->update(['is_del'=>1]);
+
+       
+        $bool1 = $shop_orderModel
+            ->where('order_id',$order_id)
+            ->setDec('order_total_amount',$order_details['special_price']*$num);
+        $bool2 = $shop_orderModel
+            ->where('order_id',$order_id)
+            ->setDec('order_amount',$order_details['product_price']*$num);
+
+        if($bool&&$bool1&&$bool2){
+            Db::commit();  
+            return ['code'=>1,'msg'=>'移除成功'];
+        }else{
+            Db::rollback();
+            return ['code'=>2,'msg'=>'移除失败'];
+        }
+    }
+
+//打印菜单
+    public function print_order(){
+        //生成新的菜单列表
+        $order_id = input('order_id');
+        $order_data = Db::name('shop_order')
+            ->alias('s')
+            ->field('s.*,t.name')
+            ->join('o_table t','s.table_id = t.id')
+            ->where('s.order_id',$order_id)
+            ->where('s.store_id',$this->store_id)
+            ->limit(1)
+            ->find();
+        if(empty($order_data)){
+            $this->error('订单不存在');exit;
+        }
+        $order_data['details'] = Db::name('shop_order_details')
+            ->where('order_id',$order_id)
+            ->where('is_del',0)
+            ->select();
+        $this->assign('order_data',$order_data);
+
+        // dump($order_data);
+
+
+        return $this->fetch();
+
+
+
+
+    }
+
+
+
 }

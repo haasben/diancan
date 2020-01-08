@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:43:"./application/admin/template/shop\index.htm";i:1578276865;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\shop\shop_bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:43:"./application/admin/template/shop\index.htm";i:1578469913;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\shop\shop_bar.htm";i:1573115083;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -169,7 +169,7 @@
                         <th abbr="article_time" axis="col6" class="w160">
                             <div class="tc">支付时间</div>
                         </th>
-                        <th axis="col1" class="w160">
+                        <th axis="col1" class="w280">
                             <div class="tc">操作</div>
                         </th>
                     </tr>
@@ -239,7 +239,7 @@
                             </td>
                             
                             <td>
-                                <div class="w160 tc">
+                                <div class="w280 tc">
                                     <a href="<?php echo url('Shop/order_details',array('order_id'=>$vo['order_id'])); ?>" class="btn blue"><i class="fa fa-pencil-square-o"></i>详情</a>
                                     <?php if($vo['order_status'] == '0'): ?>
                                         <!-- 订单未付款时出现 -->
@@ -258,9 +258,9 @@
                             <!--                 <i class="fa fa-pencil-square-o"></i>发货 -->
                                        <!--  </a> -->
 
-                                        <a href="JavaScript:void(0);" onclick="OrderMark('gbdd','<?php echo $vo['order_id']; ?>','<?php echo $vo['users_id']; ?>');" class="btn blue">
+                                   <!--      <a href="JavaScript:void(0);" onclick="OrderMark('gbdd','<?php echo $vo['order_id']; ?>','<?php echo $vo['users_id']; ?>');" class="btn blue">
                                             <i class="fa fa-pencil-square-o"></i>关闭
-                                        </a>
+                                        </a> -->
                                     <?php endif; if($vo['order_status'] == '2'): ?>
                                         <!-- 订单已发货时出现 -->
                                       <!--   <a href="JavaScript:void(0);" onclick="OrderMark('ysh','<?php echo $vo['order_id']; ?>','<?php echo $vo['users_id']; ?>');" class="btn blue"> -->
@@ -280,7 +280,12 @@
                                         <a href="JavaScript:void(0);" onclick="OrderMark('ddsc','<?php echo $vo['order_id']; ?>','<?php echo $vo['users_id']; ?>');" class="btn blue">
                                             <i class="fa fa-pencil-square-o"></i>删除
                                         </a>
+                                    <?php endif; if($vo['order_status'] == 1): ?>
+                                     <a href="JavaScript:void(0);" url="<?php echo url('Shop/print_order',array('order_id'=>$vo['order_id'])); ?>" class="print_order btn blue">
+                                            <i class="fa fa-pencil-square-o"></i>打印订单
+                                        </a>
                                     <?php endif; ?>
+                                    
                                 </div>
                             </td>
                         </tr>
@@ -311,6 +316,21 @@
 </div>
 <script>
     $(document).ready(function(){
+
+        $('.print_order').click(function(){
+            var url = $(this).attr('url');
+            layer.open({
+              type: 2,
+              title: '订单详情',
+              shadeClose: true,
+              shade: false,
+              maxmin: true, //开启最大化最小化按钮
+              area: ['400px', '600px'],
+              content: url
+            });
+            })
+
+
         // 表格行点击选中切换
         $('#flexigrid > table>tbody >tr').click(function(){
             $(this).toggleClass('trSelected');

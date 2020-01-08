@@ -70,6 +70,7 @@ class Index extends Base
 
         /*检测是否存在会员中心模板*/
         $globalConfig = tpCache('global');
+
         if ('v1.0.1' > getVersion('version_themeusers') && !empty($globalConfig['web_users_switch'])) {
             $is_syn_theme_users = 1;
         } else {
@@ -119,7 +120,7 @@ class Index extends Base
         //今日0点时间戳 开始时间
         $scan = Db::name('shop_order');
         $arr = array();
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=0; $i < 7; $i++) { 
             $where = [
                 'pay_time'=>['between',[$this_time_d,$this_time_d+60*60*24]],
                 'order_status'=>1,
@@ -518,6 +519,7 @@ class Index extends Base
      */
     public function changeTableVal()
     {
+
         if (IS_AJAX_POST) {
             $url = null;
             $data = [

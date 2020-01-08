@@ -46,6 +46,11 @@
                         <th abbr="article_time" axis="col6" class="w100">
                             <div class="tc">桌位数</div>
                         </th>
+
+                        <th abbr="article_time" axis="col6" class="w100">
+                            <div class="tc">状态</div>
+                        </th>
+
                         <th abbr="article_time" axis="col6" class="w100">
                             <div class="tc">启用</div>
                         </th>
@@ -86,13 +91,23 @@
                                     {$vo.num_seats}
                                 </div>
                             </td>
-                            
+                            <td class="">
+                                <div class="w100 tc">
+                                    {if condition="$vo['is_seat'] eq 1"}
+                                        <span class="yes" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableValStatus('table','id','{$vo.id}','is_seat',this);"{/eq} ><i class="fa fa-check-circle"></i>已上座</span>
+                                    {else /}
+                                        <span class="no" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableValStatus('table','id','{$vo.id}','is_seat',this);"{/eq} ><i class="fa fa-ban"></i>空闲中</span>
+                                    {/if}
+                                </div>
+                            </td>
+
+
                             <td class="">
                                 <div class="w100 tc">
                                     {if condition="$vo['status'] eq 1"}
-                                        <span class="yes" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableVal('ad_position','id','{$vo.id}','status',this);"{/eq} ><i class="fa fa-check-circle"></i>是</span>
+                                        <span class="yes" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableVal('table','id','{$vo.id}','status',this);"{/eq} ><i class="fa fa-check-circle"></i>是</span>
                                     {else /}
-                                        <span class="no" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableVal('ad_position','id','{$vo.id}','status',this);"{/eq} ><i class="fa fa-ban"></i>否</span>
+                                        <span class="no" {eq name="$Think.const.CONTROLLER_NAME.'@edit'|is_check_access" value="1"}onClick="changeTableVal('table','id','{$vo.id}','status',this);"{/eq} ><i class="fa fa-ban"></i>否</span>
                                     {/if}
                                 </div>
                             </td>

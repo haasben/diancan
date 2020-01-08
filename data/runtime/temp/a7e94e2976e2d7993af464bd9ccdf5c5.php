@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:51:"./application/admin/template/shop\order_details.htm";i:1577763282;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:51:"./application/admin/template/shop\order_details.htm";i:1578470739;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\member\bar.htm";i:1578276579;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -323,6 +323,10 @@
                 <div class="bot" style="padding-bottom:0px;">
                     <input type="hidden" name="gourl" value="<?php echo $gourl; ?>">
                     <a href="JavaScript:void(0);" onclick="UpNote('<?php echo $OrderData['order_id']; ?>');" class="ncap-btn-big ncap-btn-green" id="submitBtn">保存</a>
+                    <?php if($OrderData['order_status'] == 1): ?>
+                        <a href="JavaScript:void(0);" data-id="<?php echo $OrderData['order_id']; ?>" class="ncap-btn-big ncap-btn-green" id="print_order">打印订单</a>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
 
@@ -369,6 +373,12 @@
                                 <th abbr="article_title" axis="col3" class="w100">
                                     <div class="tc">单品小计</div>
                                 </th>
+                                 <th abbr="article_title" axis="col3" class="w150">
+                                    <div class="tc">添加时间</div>
+                                </th>
+                               <th abbr="article_title" axis="col3" class="w100">
+                                    <div class="tc">操作</div>
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -394,7 +404,11 @@
                                 <td class="" style="width: 100%;">
                                     <div class="tl" style="padding-left: 10px;">
                                         <!-- <a href="<?php echo $vo['arcurl']; ?>" target="_blank"> -->
-                                            <img src="<?php echo $vo['litpic']; ?>" style="width: 60px;height: 60px;"> <?php echo $vo['product_name']; ?>
+
+                                            <img src="<?php echo $vo['litpic']; ?>" style="width: 60px;height: 60px;"> 
+                                            <span style="float: left;margin:0 10px"><?php echo $vo['product_name']; ?></span>
+
+                                            <?php if($vo['is_add_dish'] == 1): ?><img style="width: 20px;height: 20px" class="jiacai" src="/public/static/admin/images/jiacai.png"><?php endif; ?>
                                     <!--     </a> -->
                                     </div>
                                 </td>
@@ -418,10 +432,75 @@
                                         ￥<?php echo $vo['subtotal']; ?>
                                     </div>
                                 </td>
+
+                                <td class="sort">
+                                    <div class="tc w150">
+                                        <?php echo date('Y-m-d H:i:s',$vo['add_time']); ?>
+                                    </div>
+                                </td>
+
+                                <td class="sort">
+                                    <div class="tc w100">
+                                        <?php if($vo['is_del'] == 1): ?>
+                                            已移除菜品
+                                        <?php else: ?>
+                                            <a href="javascript:;" class="remove_dishes" data-id="<?php echo $vo['details_id']; ?>">移除菜品</a>
+                                        <?php endif; ?>
+                                       
+                                    </div>
+                                </td>
                             </tr>
                             <?php endforeach; endif; else: echo "" ;endif; endif; ?>
                         </tbody>
                     </table>
+                    <script type="text/javascript">
+                        $(function(){
+                            $('.remove_dishes').click(function(){
+                                var details_id = $(this).attr('data-id');
+
+                                layer.confirm('<font color="#ff0000">确定要移除该菜品吗？</font><br>(移除后订单总价会减去该菜品价格)', {
+                                    title: false,
+                                    btn: ['确定','取消'] //按钮
+                                }, function(){
+                                    layer_loading('正在处理');
+                                    // 确定
+                                    $.post('<?php echo url("shop/remove_dishes"); ?>',{details_id:details_id},function(data){
+                                        layer.closeAll();
+                                         if(data.code == 1){
+                                            layer.msg(data.msg, {icon: 1,time:1000},function(){
+                                                window.location.reload();
+                                            });
+                                            // $('tr[data-id="'+$(obj).attr('data-id')+'"]').remove();
+                                        }else{
+                                            layer.alert(data.msg, {icon: 2, title:false});  //alert(data);
+                                        }
+
+                                    })
+                                }, function(index){
+                                    layer.close(index);
+                                });
+                                return false;
+
+                            })
+                        $('#print_order').click(function(){
+                            var order_id = $(this).attr('data-id');
+                            layer.open({
+                              type: 2,
+                              title: '订单详情',
+                              shadeClose: true,
+                              shade: false,
+                              maxmin: true, //开启最大化最小化按钮
+                              area: ['400px', '600px'],
+                              content: "<?php echo url('Shop/print_order',array('order_id'=>$OrderData['order_id'])); ?>"
+                            });
+                            })
+
+
+                        })
+
+                    </script>
+
+
                 </div>
                 <div class="iDiv" style="display: none;"></div>
             </div>

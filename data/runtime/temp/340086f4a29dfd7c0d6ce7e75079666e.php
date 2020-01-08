@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:43:"./application/admin/template/system\web.htm";i:1577755151;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\system\bar.htm";i:1578017209;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:43:"./application/admin/template/system\web.htm";i:1578453948;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:56:"D:\WWW\diancan\application\admin\template\system\bar.htm";i:1578017209;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -169,7 +169,7 @@
                 </dd>
                 <?php endif; ?>
             </dl>
-            <dl class="row">
+<!--             <dl class="row">
                 <dt class="tit">
                     <label for="web_basehost">小程序地址</label>
                 </dt>
@@ -183,7 +183,7 @@
                     <div class="r"><a href="javascript:void(0);" onclick="showtext('web_basehost');" class="ui-btn3 blue web_basehost" data-clipboard-text="{eyou:global name='web_basehost' /}">复制标签</a></div>
                 </dd>
                 <?php endif; ?>
-            </dl>
+            </dl> -->
 <!--             <dl class="row">
                 <dt class="tit">
                     <label for="web_title">首页标题</label>

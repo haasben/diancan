@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/template/arctype\index.htm";i:1578391964;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/template/arctype\index.htm";i:1578455814;s:59:"D:\WWW\diancan\application\admin\template\public\layout.htm";i:1571728724;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
 <!doctype html>
 <html>
 <head>
