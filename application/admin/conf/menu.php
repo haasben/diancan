@@ -219,7 +219,7 @@ return  array(
                 'id'=>1004,
                 'parent_id'=>1000,
                 'name' => '订单管理',
-                'controller'=>'Shop',
+                'controller'=>'Shops',
                 'action'=>'index',
                 'url'=>'', 
                 'target'=>'workspace',

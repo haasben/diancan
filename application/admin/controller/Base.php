@@ -27,6 +27,7 @@ class Base extends Controller {
      */
     function __construct() 
     {
+     
         if (!session_id()) {
             Session::start();
         }
@@ -42,6 +43,7 @@ class Base extends Controller {
 
         $is_eyou_authortoken = !empty($is_eyou_authortoken) ? $is_eyou_authortoken : 0;
         $this->assign('is_eyou_authortoken', $is_eyou_authortoken);
+      	
         /*--end*/
     }
     
@@ -80,7 +82,7 @@ class Base extends Controller {
                 $this->redirect($url);
             }
         }
-
+	 
         /* 增、改的跳转提示页，只限制于发布文档的模型和自定义模型 */
         $channeltype_list = config('global.channeltype_list');
         $controller_name = $this->request->controller();
@@ -105,7 +107,9 @@ class Base extends Controller {
             'mca'  => 'user/UsersRelease/release_centre',
             'lang' => $this->admin_lang,
         ])->getField('status');
+
         $this->assign('IsOpenRelease',$IsOpenRelease);
+    
         /* END */
     }
     

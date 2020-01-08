@@ -12,7 +12,7 @@
  */
 
 namespace app\admin\controller;
-use app\admin\controller\Base;
+//use app\admin\controller\Base;
 use think\Controller;
 use think\Db;
 
@@ -20,6 +20,7 @@ class Index extends Base
 {
     public function index()
     {
+		
         $language_db = Db::name('language');
 
         /*多语言列表*/
@@ -651,8 +652,9 @@ class Index extends Base
     /**
      * 功能开关
      */
-    public function switch_map()
+    public function switch_maps()
     {
+    
         if (IS_POST) {
             $inc_type = input('post.inc_type/s');
             $name = input('post.name/s');
@@ -829,7 +831,7 @@ class Index extends Base
             $is_online = 1;
         }
         $this->assign('is_online',$is_online);
-
+		
         /*检测是否存在会员中心模板*/
         if ('v1.0.1' > getVersion('version_themeusers')) {
             $is_themeusers_exist = 1;

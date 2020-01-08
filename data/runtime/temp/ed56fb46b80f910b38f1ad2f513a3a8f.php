@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:23:"./template/pc/index.htm";i:1571728724;s:37:"D:\WWW\diancan\template\pc\header.htm";i:1571728724;s:37:"D:\WWW\diancan\template\pc\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:23:"./template/pc/index.htm";i:1571728726;s:50:"/www/wwwroot/crms.cdqifa.cn/template/pc/header.htm";i:1571728726;s:50:"/www/wwwroot/crms.cdqifa.cn/template/pc/footer.htm";i:1571728726;}*/ ?>
 <!doctype html>
 <html>
 <head>

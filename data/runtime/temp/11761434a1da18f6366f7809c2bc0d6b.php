@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:44:"./application/admin/template/admin\login.htm";i:1573115082;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:44:"./application/admin/template/admin\login.htm";i:1573115084;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728726;}*/ ?>
 <!DOCTYPE html>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >

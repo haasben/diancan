@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578471573;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728724;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728724;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578480442;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728726;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728726;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -190,7 +190,7 @@ preload="preload" muted="muted" >
   // 功能地图
   function switch_map()
   {
-      var url = "<?php echo url('Index/switch_map'); ?>";
+      var url = "<?php echo url('Index/switch_maps'); ?>";
       workspace.window.location.href = url;
   }
 

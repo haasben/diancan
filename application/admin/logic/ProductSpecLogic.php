@@ -27,6 +27,7 @@ class ProductSpecLogic extends Model
      * 初始化操作
      */
     public function _initialize() {
+
         parent::_initialize();
     }
 

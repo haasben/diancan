@@ -8,3 +8,9 @@
 2020-01-03 10:09:05 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
 2020-01-03 10:09:06 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
 2020-01-03 10:09:07 pid:1 Gateway: Worker->name conflict. Key:127.0.0.1:YourAppBusinessWorker:0
+2020-01-08 18:36:33 pid:18552 Workerman[start.php] start in DAEMON mode
+2020-01-08 18:37:12 pid:18565 Workerman[start.php] start in DAEMON mode
+2020-01-08 18:37:15 pid:18566 Workerman[start.php] start in DAEMON mode
+2020-01-08 18:38:10 pid:18575 Workerman[start.php] start in DAEMON mode
+2020-01-08 18:39:46 pid:18808 Workerman[start.php] start in DAEMON mode
+2020-01-08 18:40:59 pid:18816 Register auth timeout (127.0.0.1). See http://doc2.workerman.net/register-auth-timeout.html

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/template/archives\index.htm";i:1573115083;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/template/archives\index.htm";i:1573115084;}*/ ?>
 <!doctype html>
 <html>
 <head>

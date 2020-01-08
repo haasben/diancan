@@ -30,7 +30,9 @@ define('RUNTIME_PATH', DATA_PATH . 'runtime/');
 // 安装程序定义
 define('DEFAULT_INSTALL_DATE',1525756440);
 // 序列号
-define('DEFAULT_SERIALNUMBER','20180508131400oCWIoa');
+// define('DEFAULT_SERIALNUMBER','20180508131400oCWIoa');
+
+define('DEFAULT_SERIALNUMBER','454518748541');
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/application/');
 
