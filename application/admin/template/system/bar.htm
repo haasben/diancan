@@ -10,13 +10,13 @@
                 <li><a href="{:url('System/web')}" {if condition="'web'==$Think.const.ACTION_NAME"}class="current"{/if}><span>网站设置</span></a></li>
                 {/eq}
 
-              <!--   {eq name='$main_lang' value='$admin_lang'}
+                 {eq name='$main_lang' value='$admin_lang'}
                 {eq name="$Think.const.CONTROLLER_NAME.'@web2'|is_check_access" value="1"}
                 <li><a href="{:url('System/web2')}" {if condition="'web2'==$Think.const.ACTION_NAME"}class="current"{/if}><span>核心设置</span></a></li>
                 {/eq}
                 {/eq}
 
-                {eq name="$Think.const.CONTROLLER_NAME.'@basic'|is_check_access" value="1"}
+               <!-- {eq name="$Think.const.CONTROLLER_NAME.'@basic'|is_check_access" value="1"}
                 <li><a href="{:url('System/basic')}" {if condition="'basic'==$Think.const.ACTION_NAME"}class="current"{/if}><span>附件设置</span></a></li>
                 {/eq}
 

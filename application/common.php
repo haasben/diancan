@@ -201,7 +201,6 @@ if (!function_exists('tpCache'))
             if ($param[0] != 'global') {
                 $result = cache($cache_inc_type,$newData,$options);
             }
-            
             return $result;
         }
     }

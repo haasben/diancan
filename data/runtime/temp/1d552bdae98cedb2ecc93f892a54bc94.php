@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:56:"./application/admin/template/archives/index_archives.htm";i:1577772358;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/layout.htm";i:1571728726;s:76:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/archives/tags_btn.htm";i:1573178826;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/footer.htm";i:1571728726;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:56:"./application/admin/template/archives/index_archives.htm";i:1578564055;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/layout.htm";i:1571728726;s:76:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/archives/tags_btn.htm";i:1578564067;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/footer.htm";i:1571728726;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -49,7 +49,7 @@
     <div class="flexigrid" style="margin-top: 0px;">
         <div class="mDiv" style="padding: 5px 0px;">
             <div class="ftitle">
-                <h3><?php echo (isset($arctype_info['typename']) && ($arctype_info['typename'] !== '')?$arctype_info['typename']:'全部文档'); ?></h3>
+                <h3><?php echo (isset($arctype_info['typename']) && ($arctype_info['typename'] !== '')?$arctype_info['typename']:'全部菜品'); ?></h3>
                 <h5>(共<?php echo $pager->totalRows; ?>条数据)</h5>
             </div>
             <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
@@ -74,7 +74,7 @@
         <div class="fbutton" style="float: none;">
             <a href="<?php if(\think\Request::instance()->param('typeid') > '0'): ?><?php echo url(CONTROLLER_NAME.'/add', ['channel'=>\think\Request::instance()->param('channel'), 'typeid'=>\think\Request::instance()->param('typeid')]); else: ?>javascript:quick_release();<?php endif; ?>">
                 <div class="add">
-                    <span><i class="fa fa-plus"></i>发布文档</span>
+                    <span><i class="fa fa-plus"></i>发布菜品</span>
                 </div>
             </a>
         </div>

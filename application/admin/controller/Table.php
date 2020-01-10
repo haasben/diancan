@@ -14,9 +14,6 @@ class Table extends Base {
 
 	public function index(){
 
-
-
-
 		$list = array();
         $get = input('get.');
         $keywords = input('keywords/s');
@@ -129,7 +126,7 @@ class Table extends Base {
             ->where('inc_type','pay')
             ->limit(1)
             ->value('value');
-
+			//var_dump($this->store_id);die;
             if(empty($pay_wechat_config)){
 
                 $this->error('请先配置小程序信息');

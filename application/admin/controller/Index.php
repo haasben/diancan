@@ -123,13 +123,14 @@ class Index extends Base
         $arr = array();
         for ($i=0; $i < 7; $i++) { 
             $where = [
+                'store_id'=>$this->store_id,
                 'pay_time'=>['between',[$this_time_d,$this_time_d+60*60*24]],
                 'order_status'=>1,
             ];
    
             $sum = $scan
                 ->where($where)
-                ->sum('order_total_amount');
+                ->sum('order_amount');
             
             $arr['day'][$i] = [
                 'sum'=>$sum,
@@ -664,7 +665,8 @@ class Index extends Base
             switch ($inc_type) {
                 case 'pay':
                 case 'shop':
-                {
+                {	
+                
                     getUsersConfigData($inc_type, [$name => $value]);
 
                     // 开启商城

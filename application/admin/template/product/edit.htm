@@ -49,7 +49,7 @@
                     <p class="notic"></p>
                 </dd>
             </dl>
-          <!--   <dl class="row">
+           <!-- <dl class="row">
                 <dt class="tit">
                     <label>文档属性</label>
                 </dt>
@@ -63,7 +63,7 @@
                     <span class="err"></span>
                     <p class="notic"></p>
                 </dd>
-            </dl> -->
+            </dl>-->
             <dl class="row {if condition="$field.is_jump != 1"}none{/if} dl_jump">
                 <dt class="tit">
                     <label>跳转网址</label>
@@ -189,10 +189,11 @@
                 {/empty}
             {/eq}
         {/if}
-        
+
         {if condition="1 == $shopConfig['shop_open'] && !empty($ifcontrolRow['users_price'])"}
-        
-            {if condition="!isset($shopConfig['shop_open_spec']) || 0 == $shopConfig['shop_open_spec']"}
+          
+
+            {if condition="!isset($shopConfig['shop_open_spec']) ||	0 == $shopConfig['shop_open_spec']"}
                 
             {else/}
                 <dl class="row">
@@ -270,15 +271,15 @@
                 </dl>
                 <script type="text/javascript">
                     // 规格列表管理
-                    var TemplateUrl = "{:url('Shop/spec_template')}";
+                    var TemplateUrl = "{:url('Shops/spec_template')}";
                     // 规格选择
-                    var SelectUrl = "{:url('Shop/spec_select')}";
+                    var SelectUrl = "{:url('Shops/spec_select')}";
                     // 获取规格名称规格值框架URL
-                    var GetHtmlUrl = "{:url('Shop/assemble_spec_data')}";
+                    var GetHtmlUrl = "{:url('Shops/assemble_spec_data')}";
                     // 当规格库更新后，调用此方式及时更新选择规格名称的下拉框信息
-                    var GetPresetSpecUrl = "{:url('Shop/update_spec_info')}";
+                    var GetPresetSpecUrl = "{:url('Shops/update_spec_info')}";
                     // 同步更新规格库数据到产品规格中，单条操作
-                    var RefreshSpecUrl = "{:url('Shop/refresh_spec_value')}";
+                    var RefreshSpecUrl = "{:url('Shops/refresh_spec_value')}";
                 </script>
                 <script type="text/javascript">
                     $(function () {

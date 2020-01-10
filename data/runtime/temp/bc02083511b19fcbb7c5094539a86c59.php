@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578480442;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728726;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1571728726;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/template/index\index.htm";i:1578625767;s:60:"D:\WWW\diancan\application\admin\template\public\menubox.htm";i:1571728726;s:57:"D:\WWW\diancan\application\admin\template\public\left.htm";i:1578540984;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -69,11 +69,9 @@
 <div class="admincp-container unfold">
 <div class="eycms_cont_left hidden-xs">
     <dl class="eylogo">
-        <?php if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): ?>
-        <a href="<?php echo \think\Request::instance()->url(); ?>"><img id="web_adminlogo" src="/public/static/admin/images/logo_ey.png?v=<?php echo time(); ?>" alt="点击刷新" title="点击刷新"></a>
-        <?php else: ?>
-        <a href="<?php echo \think\Request::instance()->url(); ?>"><img id="web_adminlogo" src="/public/static/admin/images/logo.png?v=<?php echo time(); ?>" alt="点击刷新" title="点击刷新"></a>
-        <?php endif; ?>
+
+        <a href="<?php echo \think\Request::instance()->url(); ?>"><img id="web_adminlogo" src="<?php echo $global['web_adminlogo']; ?>?v=<?php echo time(); ?>" alt="点击刷新" title="点击刷新"></a>
+
     </dl>
     <?php if(is_array($menu) || $menu instanceof \think\Collection || $menu instanceof \think\Paginator): $i = 0; $__LIST__ = $menu;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
         <dl style="<?php if($vo['is_menu'] == 0): ?>display: none;<?php endif; ?>">
@@ -115,11 +113,12 @@
                 <span class="hidden-xs">网站首页</span>
               </a> -->
               <?php if(is_check_access('Index@switch_map') == '1'): ?>
-              <a class="btn btn-default dropdown-toggle" href="javascript:void(0);" onclick="switch_map();">
+             <!--<a class="btn btn-default dropdown-toggle" href="javascript:void(0);" onclick="switch_map();">
                 <i class="fa fa-toggle-on"></i>
                 <span class="hidden-xs">功能开关</span>
               </a>
-              <?php endif; if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): endif; ?>
+              <?php endif; ?>-->
+              <?php if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): endif; ?>
 
               <!-- 多语言 -->
               <em id="Language_index" class="eyou_tool em_lang" data-expanded="close" <?php if(empty($web_language_switch)): ?>style="display: none;"<?php endif; ?>>

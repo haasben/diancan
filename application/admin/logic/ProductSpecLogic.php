@@ -151,10 +151,12 @@ class ProductSpecLogic extends Model
     // 拼装规格名称下拉选项
     public function GetPresetNameOption($preset_mark_id_arr = null)
     {
+
         $MarkIdWhere = explode(',', $preset_mark_id_arr);
         $where = [
             'lang' => get_admin_lang(),
             'preset_mark_id' => ['NOT IN', $MarkIdWhere],
+          	'store_id'		=>session('admin_info')['store_id'],
         ];
         $PresetName  = Db::name('product_spec_preset')->where($where)->field('preset_id,preset_mark_id,preset_name')->group('preset_mark_id')->order('preset_mark_id desc')->select();
         if($PresetName){
@@ -246,6 +248,7 @@ class ProductSpecLogic extends Model
                 }
                 $PresetMarkIdArray = implode(',', $mark_id_arr);
             }
+  
             $ReturnData = $this->GetPresetNameOption($PresetMarkIdArray);
             $return = $ReturnData;
         }

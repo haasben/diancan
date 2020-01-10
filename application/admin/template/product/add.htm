@@ -50,7 +50,7 @@
                     <p class="notic"></p>
                 </dd>
             </dl>
-<!--             <dl class="row">
+            <!--<dl class="row">
                 <dt class="tit">
                     <label>文档属性</label>
                 </dt>
@@ -64,7 +64,7 @@
                     <span class="err"></span>
                     <p class="notic"></p>
                 </dd>
-            </dl> -->
+            </dl>-->
             <dl class="row none dl_jump">
                 <dt class="tit">
                     <label>跳转网址</label>
@@ -98,7 +98,7 @@
                     <label><input type="checkbox" name="is_remote" id="is_remote" value="1" onClick="clickRemote(this, 'litpic');">远程图片</label>
                     <span class="err"></span>
                     <p class="notic">当没有手动上传图片时候，会自动提取正文的第一张图片作为缩略图</p>
-                    &nbsp;<!-- <a href="javascript:void(0);" onclick="system_thumb();" class="ncap-btn ncap-btn-green">缩略图配置</a> -->
+                    &nbsp;<a href="javascript:void(0);" onclick="system_thumb();" class="ncap-btn ncap-btn-green">缩略图配置</a>
                 </dd>
             </dl>
             <dl class="row">
@@ -252,15 +252,15 @@
 
                 <script type="text/javascript">
                     // 规格列表管理
-                    var TemplateUrl = "{:url('Shop/spec_template')}";
+                    var TemplateUrl = "{:url('Shops/spec_template')}";
                     // 规格选择
-                    var SelectUrl = "{:url('Shop/spec_select')}";
+                    var SelectUrl = "{:url('Shops/spec_select')}";
                     // 获取规格名称规格值框架URL
-                    var GetHtmlUrl = "{:url('Shop/assemble_spec_data')}";
+                    var GetHtmlUrl = "{:url('Shops/assemble_spec_data')}";
                     // 当规格库更新后，调用此方式及时更新选择规格名称的下拉框信息
-                    var GetPresetSpecUrl = "{:url('Shop/update_spec_info')}";
+                    var GetPresetSpecUrl = "{:url('Shops/update_spec_info')}";
                     // 同步更新规格库数据到产品规格中，单条操作
-                    var RefreshPresetUrl = "{:url('Shop/refresh_preset_value')}";
+                    var RefreshPresetUrl = "{:url('Shops/refresh_preset_value')}";
                 </script>
                 <script type="text/javascript">
                     $(function () {

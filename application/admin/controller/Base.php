@@ -41,7 +41,7 @@ class Base extends Controller {
         /*---------*/
         $is_eyou_authortoken = session('web_is_authortoken');
 
-        $is_eyou_authortoken = !empty($is_eyou_authortoken) ? $is_eyou_authortoken : 0;
+        $is_eyou_authortoken =  0;
         $this->assign('is_eyou_authortoken', $is_eyou_authortoken);
       	
         /*--end*/
@@ -152,22 +152,19 @@ class Base extends Controller {
     public function global_assign()
     {
 
-        $global = cache('global');
-        if(empty($global)){
-            // $global
-            $globals = Db::name('config')
-            ->where('store_id',$this->store_id)
-            ->where('lang','cn')
-            ->select();
 
-            $global = array();
-            foreach ($globals as $k => $v) {
-                $global[$v['name']] = $v['value'];
-            }
-            cache('global',$global);
+        // $global
+        $globals = Db::name('config')
+          ->where('store_id',$this->store_id)
+          ->where('lang','cn')
+          ->select();
+
+        $global = array();
+        foreach ($globals as $k => $v) {
+            $global[$v['name']] = $v['value'];
         }
-        
-        // dump($global);
+
+        // dump($global);die;
         $this->assign('global', $global);
     } 
     

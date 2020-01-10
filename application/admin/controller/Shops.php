@@ -718,7 +718,18 @@ class Shops extends Base {
 
             // 合并数组并且更新数据
             $UpData = array_merge($data_old, $data_new);
-            model('ProductSpecPreset')->saveAll($UpData);
+            $addData_spec = array();
+            $prodectSpecModel = model('ProductSpecPreset');
+            foreach ($UpData as $k => $v) {
+                if(isset($v['preset_id'])){
+                    $prodectSpecModel->update($v);
+                }else{
+                    $addData_spec[] = $v; 
+                }
+            }
+
+
+            $prodectSpecModel->saveAll($addData_spec);
             $this->success('更新成功！');
         }
 
@@ -821,7 +832,7 @@ class Shops extends Base {
 
             // 获取规格拼装后的html表格
             $ResultArray = $this->ProductSpecLogic->GetPresetSpecAssembly($post);
-
+		
             // 结果返回
             if (isset($post['aid']) && !empty($post['aid'])) {
                 $ReturnHtml = [
@@ -830,11 +841,15 @@ class Shops extends Base {
                     'spec_mark_id_arr' => $ResultArray['PresetMarkIdArray'],
                 ];
             }else{
+          
                 // 拼装更新预设名称下拉选项
                 $where = [
                     'preset_mark_id' => ['IN', $post['preset_mark_id_arr']],
+                  	'store_id'	=>$this->store_id,
                 ];
+       
                 $PresetData = $this->product_spec_preset_db->where($where)->order('preset_id asc')->select();
+ 			
                 $sessionData = session('spec_arr');
                 foreach ($PresetData as $key => $value) {
                     if (!empty($sessionData[$value['preset_mark_id']])) {
@@ -846,6 +861,7 @@ class Shops extends Base {
 
                 $PresetData = group_same_key($PresetData, 'preset_mark_id');
                 $result = [];
+              	
                 foreach ($PresetData as $key => $value) {
                     $result[$key] .= "<option value='0'>选择规格值</option>";
                     if(!empty($value)){
@@ -863,6 +879,7 @@ class Shops extends Base {
                     'preset_value_option' => $result,
                 ];
             }
+    
             $this->success('更新成功！', null, $ReturnHtml);
         }
     }

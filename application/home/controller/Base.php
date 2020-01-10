@@ -26,6 +26,8 @@ class Base extends Common {
      * 初始化操作
      */
     public function _initialize() {
+      
+      	echo '<div style="width:100%;margin:auto;text-align:center;font-size:20px;color:red;">网站维护中...</div>';die;
         parent::_initialize();
        
         $this->fieldLogic = new FieldLogic();

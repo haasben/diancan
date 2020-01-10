@@ -340,6 +340,7 @@ class Product extends Base
 
         // 商城配置
         $shopConfig = getUsersConfigData('shop');
+      	$shopConfig['shop_open'] = 1;
         $assign_data['shopConfig'] = $shopConfig;
 
         // 商品规格
@@ -476,6 +477,7 @@ class Product extends Base
         // 获取规格数据信息
         // 包含：SpecSelectName、HtmlTable、spec_mark_id_arr、preset_value
         $assign_data = model('ProductSpecData')->GetProductSpecData($id);
+      //dump($assign_data);die;
         if (empty($info)) {
             $this->error('数据不存在，请联系管理员！');
             exit;
@@ -568,9 +570,10 @@ class Product extends Base
 
         // 商城配置
         $shopConfig = getUsersConfigData('shop');
+      	$shopConfig['shop_open'] = 1;
         $assign_data['shopConfig'] = $shopConfig;
 
-        // dump($assign_data);die;
+         //dump($assign_data);die;
 
         // 处理产品价格属性
         $IsSame = '';

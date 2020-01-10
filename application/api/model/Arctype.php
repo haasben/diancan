@@ -18,6 +18,7 @@ class Arctype extends Model
             ->where('status',1)
             ->where('store_id',$store_id)
             ->where('is_hidden',0)
+          	->order('sort_order')
             ->select();
         return $data;
 	}

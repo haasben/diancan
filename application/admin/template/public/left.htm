@@ -1,10 +1,8 @@
 <div class="eycms_cont_left hidden-xs">
     <dl class="eylogo">
-        {notempty name="$is_eyou_authortoken"}
-        <a href="{$Request.url}"><img id="web_adminlogo" src="__SKIN__/images/logo_ey.png?v={php}echo time();{/php}" alt="点击刷新" title="点击刷新"></a>
-        {else /}
-        <a href="{$Request.url}"><img id="web_adminlogo" src="__SKIN__/images/logo.png?v={php}echo time();{/php}" alt="点击刷新" title="点击刷新"></a>
-        {/notempty}
+
+        <a href="{$Request.url}"><img id="web_adminlogo" src="{$global.web_adminlogo}?v={php}echo time();{/php}" alt="点击刷新" title="点击刷新"></a>
+
     </dl>
     {volist name="menu" id="vo"}
         <dl style="{if condition='$vo.is_menu == 0'}display: none;{/if}">

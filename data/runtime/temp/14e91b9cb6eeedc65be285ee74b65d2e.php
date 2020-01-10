@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:44:"./application/admin/template/shops/index.htm";i:1578479255;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/layout.htm";i:1571728726;s:69:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/member/bar.htm";i:1578276580;s:73:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/shops/shop_bar.htm";i:1573115084;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/footer.htm";i:1571728726;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:44:"./application/admin/template/shops/index.htm";i:1578479255;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/layout.htm";i:1571728726;s:69:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/member/bar.htm";i:1578555694;s:73:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/shops/shop_bar.htm";i:1573115084;s:72:"/www/wwwroot/crms.cdqifa.cn/application/admin/template/public/footer.htm";i:1571728726;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -84,7 +84,7 @@
                         </li>
                     <?php endif; endif; if(is_check_access('Shop@index') == '1'): if(1 == $userConfig['shop_open']): ?>
                         <li>
-                            <a href="<?php echo url('Shop/index'); ?>" <?php if(in_array(CONTROLLER_NAME, ['Shop'])): ?>class="current"<?php endif; ?>>
+                            <a href="<?php echo url('Shops/index'); ?>" <?php if(in_array(CONTROLLER_NAME, ['Shop'])): ?>class="current"<?php endif; ?>>
                                 <span>商城中心</span>
                             </a>
                         </li>

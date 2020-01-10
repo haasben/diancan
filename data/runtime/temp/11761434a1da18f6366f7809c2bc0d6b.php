@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:44:"./application/admin/template/admin\login.htm";i:1573115084;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728726;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:44:"./application/admin/template/admin\login.htm";i:1578541433;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728726;}*/ ?>
 <!DOCTYPE html>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
@@ -45,11 +45,8 @@
         </div>
         <div class="container">
             <div class="logo">
-                <?php if(!(empty($is_eyou_authortoken) || (($is_eyou_authortoken instanceof \think\Collection || $is_eyou_authortoken instanceof \think\Paginator ) && $is_eyou_authortoken->isEmpty()))): ?>
-                <img src="/public/static/admin/images/logo_ey.png?v=<?php echo time(); ?>">
-                <?php else: ?>
-                <img src="/public/static/admin/images/logo.png?v=<?php echo time(); ?>">
-                <?php endif; ?>
+                <img src="/public/static/admin/images/logo_qf.png?v=<?php echo time(); ?>">
+
             </div>
             <div class="box">
                 <form action="" name='theForm' id="theForm" method="post">

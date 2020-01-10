@@ -213,7 +213,7 @@
         }, function () {
             layer_loading('正在处理');
             if (preset_mark_id) {
-                var url = "{:url('Shop/spec_delete')}";
+                var url = "{:url('Shops/spec_delete')}";
                 $.ajax({
                     type : 'post',
                     url  : url,
@@ -245,7 +245,7 @@
     function DelSpecTplValue(obj, preset_id, preset_mark_id){
         layer_loading('正在处理');
         if (preset_id) {
-            var url = "{:url('Shop/spec_delete')}";
+            var url = "{:url('Shops/spec_delete')}";
             $.ajax({
                 type : 'post',
                 url  : url,
@@ -274,7 +274,7 @@
         layer_loading('正在处理');
         var mark_preset_ids = $('#mark_preset_ids').val();
         var mark_mark_ids = $('#mark_mark_ids').val();
-        var url = "{:url('Shop/spec_template', ['_ajax'=>1])}";
+        var url = "{:url('Shops/spec_template', ['_ajax'=>1])}";
         $.ajax({
             type : 'post',
             url  : url,

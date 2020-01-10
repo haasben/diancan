@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:50:"./application/admin/template/shops/print_order.htm";i:1578471502;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:50:"./application/admin/template/shops/print_order.htm";i:1578538984;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,7 +137,7 @@
                 	</tr>
                 	<?php else: if($num == 1): $num++;?>
 	                	<tr>
-	                		<td>加菜</td>
+	                		<td>加菜 ：</td>
 	                		<td></td>
 	                		<td></td>
 	                		<td></td>

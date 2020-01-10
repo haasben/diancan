@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/template/index\welcome.htm";i:1578022930;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728726;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/template/index\welcome.htm";i:1578549323;s:59:"D:\WWW\diancan\application\admin\template\public\footer.htm";i:1571728726;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -126,13 +126,13 @@
                                 <tr>
                                     <td><?php echo $v['order_code']; ?></td>
                                     <td><?php echo $v['name']; ?></td>
-                                    <td><?php echo $v['order_total_amount']; ?></td>
+                                    <td><?php echo $v['order_amount']; ?></td>
                                     <td><?php switch($v['order_status']): case "0": ?>未付款<?php break; case "-1": ?>订单取消<?php break; case "4": ?>订单过期<?php break; default: ?><span style="color: red">已付款</span>
                                         <?php endswitch; ?>
                                     </td>
                                     <td><?php echo date('Y-m-d H:i:s',$v['add_time']); ?></td>
                                     <td><?php if($v['pay_time']>0): ?><?php echo date('Y-m-d H:i:s',$v['pay_time']); else: ?>未支付<?php endif; ?></td>
-                                    <td><a href="<?php echo url('Shop/order_details',array('order_id'=>$v['order_id'])); ?>">详情</a></td>
+                                    <td><a href="<?php echo url('Shops/order_details',array('order_id'=>$v['order_id'])); ?>">详情</a></td>
 
                                 </tr>
                                 <?php endforeach; endif; else: echo "" ;endif; ?>

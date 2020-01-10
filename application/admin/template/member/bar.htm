@@ -47,7 +47,7 @@
                 {eq name="'Shop@index'|is_check_access" value="1"}
                     {if condition="1 == $userConfig.shop_open"}
                         <li>
-                            <a href="{:url('Shop/index')}" {if condition="in_array($Think.const.CONTROLLER_NAME, ['Shop'])"}class="current"{/if}>
+                            <a href="{:url('Shops/index')}" {if condition="in_array($Think.const.CONTROLLER_NAME, ['Shop'])"}class="current"{/if}>
                                 <span>商城中心</span>
                             </a>
                         </li>

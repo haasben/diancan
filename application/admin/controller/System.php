@@ -211,20 +211,20 @@ class System extends Base
 
             /*后台LOGO*/
             $web_adminlogo = $param['web_adminlogo'];
-            $web_adminlogo_old = tpCache('web.web_adminlogo');
-            if ($web_adminlogo != $web_adminlogo_old && !empty($web_adminlogo)) {
-                $source = preg_replace('#^'.$this->root_dir.'#i', '', $web_adminlogo); // 支持子目录
-                $web_is_authortoken = tpCache('web.web_is_authortoken');
-                if (-1 == $web_is_authortoken) {
-                    $destination = '/public/static/admin/images/logo_ey.png';
-                } else {
-                    $destination = '/public/static/admin/images/logo.png';
-                }
+            // $web_adminlogo_old = tpCache('web.web_adminlogo');
+            // if ($web_adminlogo != $web_adminlogo_old && !empty($web_adminlogo)) {
+            //     $source = preg_replace('#^'.$this->root_dir.'#i', '', $web_adminlogo); // 支持子目录
+            //     $web_is_authortoken = tpCache('web.web_is_authortoken');
+            //     if (-1 == $web_is_authortoken) {
+            //         $destination = '/public/static/admin/images/logo.png';
+            //     } else {
+            //         $destination = '/public/static/admin/images/logo.png';
+            //     }
 
-                if (@copy('.'.$source, '.'.$destination)) {
-                    $param['web_adminlogo'] = $this->root_dir.$destination;
-                }
-            }
+            //     if (@copy('.'.$source, '.'.$destination)) {
+            //         $param['web_adminlogo'] = $this->root_dir.$destination;
+            //     }
+            // }
             /*--end*/
 
             /*后台登录超时*/
@@ -233,22 +233,34 @@ class System extends Base
             empty($web_login_expiretime) && $web_login_expiretime = config('login_expire');
             $param['web_login_expiretime'] = $web_login_expiretime;
             /*--end*/
-
             /*多语言*/
-            if (is_language()) {
-                $langRow = \think\Db::name('language')->order('id asc')
-                    ->cache(true, EYOUCMS_CACHE_TIME, 'language')
-                    ->select();
-                foreach ($langRow as $key => $val) {
-                    tpCache($inc_type,$param,$val['mark']);
-                    write_global_params($val['mark']); // 写入全局内置参数
-                }
-            } else {
-                tpCache($inc_type,$param);
-                write_global_params(); // 写入全局内置参数
-            }
-            /*--end*/
+            // if (is_language()) {
 
+            $where['lang'] = $this->admin_lang;
+            $where['store_id'] = $this->store_id;
+            foreach ($param as $k => $v) {
+                
+                $where['name'] = $k;
+                $bool = Db::name('config')->where($where)->update([
+                    'value'=>$v,
+                    'update_time'=>time()
+                ]);//缓存key存在且值有变更新此项
+            }
+
+                //  dump($param);
+                // $langRow = \think\Db::name('language')->order('id asc')
+                //     ->cache(true, EYOUCMS_CACHE_TIME, 'language')
+                //     ->select();
+                // foreach ($langRow as $key => $val) {
+                //     tpCache($inc_type,$param,$val['mark']);
+                //     write_global_params($val['mark']); // 写入全局内置参数
+                // }
+            // } else {
+            //     tpCache($inc_type,$param);
+            //     write_global_params(); // 写入全局内置参数
+            // }
+            /*--end*/
+ // dump($param);die;
             $refresh = false;
             $gourl = request()->domain().$this->root_dir.'/'.$adminbasefile; // 支持子目录
             /*更改自定义后台路径名*/
@@ -279,6 +291,16 @@ class System extends Base
         }
 
         $config = tpCache($inc_type);
+        $config = array();
+        $res = Db::name('config')->where('store_id',$this->store_id)
+            ->where('is_del',0)
+            ->where('lang',$this->admin_lang)
+            ->where('inc_type',$inc_type)
+            ->select();
+        // dump($res);
+        foreach($res as $k=>$val){
+            $config[$val['name']] = $val['value'];
+        }
         // 当前主域名
         $this->assign('subDomain', $this->request->subDomain());
         //自定义后台路径名
@@ -290,18 +312,18 @@ class System extends Base
         $sqlbackuppath = config('DATA_BACKUP_PATH');
         $this->assign('sqlbackuppath', $sqlbackuppath);
         // 后台logo
-        if (-1 == $config['web_is_authortoken']) {
-            $config['web_adminlogo'] = $this->root_dir.'/public/static/admin/images/logo_ey.png';
-        } else {
-            $config['web_adminlogo'] = $this->root_dir.'/public/static/admin/images/logo.png';
-        }
+        // if (-1 == $config['web_is_authortoken']) {
+        //     $config['web_adminlogo'] = $this->root_dir.'/public/static/admin/images/logo_ey.png';
+        // } else {
+        //     $config['web_adminlogo'] = $this->root_dir.'/public/static/admin/images/logo.png';
+        // }
         // 当前域名是否IP或者localhost本地
         $is_localhost = 0;
         if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/i', $this->request->host(true)) || 'localhost' == $this->request->host(true)) {
             $is_localhost = 1;
         }
         $this->assign('is_localhost',$is_localhost);
-
+        // dump($config);die;
         $this->assign('config',$config);//当前配置项
         return $this->fetch();
     }

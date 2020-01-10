@@ -125,7 +125,7 @@
                                 <tr>
                                     <td>{$v.order_code}</td>
                                     <td>{$v.name}</td>
-                                    <td>{$v.order_total_amount}</td>
+                                    <td>{$v.order_amount}</td>
                                     <td>{switch name="$v['order_status']"}
                                         {case value="0"}未付款{/case}
                                         {case value="-1"}订单取消{/case}
@@ -135,7 +135,7 @@
                                     </td>
                                     <td>{:date('Y-m-d H:i:s',$v.add_time)}</td>
                                     <td>{if condition="$v.pay_time>0"}{:date('Y-m-d H:i:s',$v.pay_time)}{else}未支付{/if}</td>
-                                    <td><a href="{:url('Shop/order_details',array('order_id'=>$v['order_id']))}">详情</a></td>
+                                    <td><a href="{:url('Shops/order_details',array('order_id'=>$v['order_id']))}">详情</a></td>
 
                                 </tr>
                                 {/volist}

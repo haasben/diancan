@@ -173,6 +173,7 @@ class AdPosition extends Base
 
                 $data = array(
                     'id'          => $post['id'],
+                  	'store_id'    => $this->store_id,
                     'title'       => trim($post['title']),
                     'intro'       => $post['intro'],
                     'update_time' => getTime(),

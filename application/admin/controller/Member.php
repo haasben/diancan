@@ -50,7 +50,7 @@ class Member extends Base {
 
         // 是否开启支付功能设置
         $this->userConfig = getUsersConfigData('all');
-
+	
         $this->assign('userConfig',$this->userConfig);
     }
 
@@ -70,6 +70,7 @@ class Member extends Base {
         // 多语言
         $condition['a.lang'] = array('eq', $this->admin_lang);
 
+        $condition['a.store_id'] = $this->store_id;
         /**
          * 数据查询
          */
@@ -1065,10 +1066,31 @@ class Member extends Base {
             //         $this->error('微信商户号错误！');
             //     }
             // }
-
-            foreach ($post as $key => $val) {
-                getUsersConfigData('pay', ['pay_wechat_config'=>serialize($val)]);
+          	$users_config_pay = Db::name('users_config')
+              ->where('store_id',$this->store_id)
+              ->where('inc_type','pay')
+              ->where('name','pay_wechat_config')
+              ->limit(1)
+              ->find();
+          	$data = '';
+          	foreach ($post as $key => $val) {
+              	$data = serialize($val);
             }
+          
+          	if(empty($users_config_pay)){
+            	Db::name('users_config')->insert([
+                  'store_id'=>$this->store_id,
+                  'value'=>$data,
+                  'inc_type'=>'pay',
+                  'name'=>'pay_wechat_config',
+              ]);
+            }else{
+            	Db::name('users_config')->where('id',$users_config_pay['id'])->update(['value'=>$data]);
+            }
+			
+            //foreach ($post as $key => $val) {
+            //    getUsersConfigData('pay', ['pay_wechat_config'=>serialize($val)]);
+           // }
             $this->success('操作成功');
         }
     }

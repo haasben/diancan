@@ -155,7 +155,10 @@ class ProductSpecData extends Model
             }
 
             // 预设值名称
-            $where = ['lang' => $this->admin_lang];
+            $where = ['lang' => $this->admin_lang,
+                      'store_id'=>session('admin_info')['store_id']
+                     
+                     ];
             if (!empty($spec_mark_id_arr)) $where['preset_mark_id'] = ['NOT IN',$spec_mark_id_arr];
             $assign_data['preset_value'] = Db::name('product_spec_preset')->where($where)->field('preset_id,preset_mark_id,preset_name')->group('preset_mark_id')->order('preset_mark_id desc')->select();
         }
